@@ -267,18 +267,25 @@ def topic_page(t: dict, data: dict) -> str:
 
 def paper_page(year: int, paper: dict, prefix: str) -> str:
     file = paper.get("file")
-    link = f'{prefix}papers/BECE_Mathematics_1990-2026_MERGED.pdf' if not file else f'{prefix}papers/{quote(file)}'
-    note = "Opens the archived merged PDF (all years) in a new tab." if not file else "Opens the archived PDF in a new tab."
+    if os.environ.get("EMMAUS_PUBLIC"):
+        note = "The PDF is kept in the local archive and is not published online."
+        actions = f'<span class="muted small">PDF available locally — not published online.</span>'
+        rights = "This hosted version publishes only the practice pages; archived PDFs stay local."
+    else:
+        link = f'{prefix}papers/BECE_Mathematics_1990-2026_MERGED.pdf' if not file else f'{prefix}papers/{quote(file)}'
+        note = "Opens the archived merged PDF (all years) in a new tab." if not file else "Opens the archived PDF in a new tab."
+        actions = f'<a class="btn btn-primary btn-sm" href="{link}" target="_blank" rel="noopener">Open PDF</a>'
+        rights = "Rights note: archived BECE papers are third-party reproductions. Keep this build local until publishing rights are confirmed."
     return f'''<section class="section"><div class="wrap">
   <p class="small"><a href="{prefix}bece/mathematics.html">BECE Mathematics</a> / {year}</p>
   <h1 style="margin:10px 0">{year} · {esc(paper['label'])}</h1>
   <p class="lead">Revision paper for BECE Mathematics. Work through the questions, then check the marking scheme.</p>
   <div class="card" style="margin-top:18px">
     <h3>Open the paper</h3>
-    <p class="small">{note} The PDF is a local archive copy — no external request is made.</p>
-    <div class="card-actions"><a class="btn btn-primary btn-sm" href="{link}" target="_blank" rel="noopener">Open PDF</a><a class="btn btn-quiet btn-sm" href="{prefix}practice.html?year={year}&paper={paper['no']}">Practice this paper</a><a class="btn btn-quiet btn-sm" href="{prefix}bece/mathematics.html">All years</a></div>
+    <p class="small">{note}</p>
+    <div class="card-actions">{actions}<a class="btn btn-quiet btn-sm" href="{prefix}practice.html?year={year}&paper={paper['no']}">Practice this paper</a><a class="btn btn-quiet btn-sm" href="{prefix}bece/mathematics.html">All years</a></div>
   </div>
-  <div class="notice" style="margin-top:18px">Rights note: archived BECE papers are third-party reproductions. Keep this build local until publishing rights are confirmed.</div>
+  <div class="notice" style="margin-top:18px">{rights}</div>
 </div></section>'''
 
 
