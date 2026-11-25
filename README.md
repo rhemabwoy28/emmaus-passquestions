@@ -2,6 +2,19 @@
 
 A pixel-close, BECE-only reconstruction of the GhLearner public-page UX with original branding, copy and assets. No backend, no accounts, no analytics, no external requests.
 
+## Live site
+
+Public GitHub Pages build: https://rhemabwoy28.github.io/emmaus-passquestions/
+
+The `main` branch is the local/source build (with PDF links). The `gh-pages` branch is generated with `EMMAUS_PUBLIC=1`, which replaces PDF links with a “PDF available locally” notice. To refresh it:
+
+```bash
+git checkout gh-pages
+EMMAUS_PUBLIC=1 python3 tools/build_pages.py
+git add -A && git commit -m 'Refresh Pages build'
+git push origin gh-pages
+```
+
 ## Run locally
 
 ```bash
