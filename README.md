@@ -19,10 +19,10 @@ python3 tools/build_pages.py               # emit all HTML pages
 
 ## What is here
 
-- 96 generated HTML pages: home, about, contact, privacy, terms, download, leaderboard, sign-in (visual only), search, BECE hub, Mathematics subject page, 10 topic pages, and 74 year/paper pages.
-- Shared `assets/site.css` and `assets/site.js`.
+- 97 generated HTML pages: home, about, contact, privacy, terms, download, leaderboard, sign-in (visual only), search, practice, BECE hub, Mathematics subject page, 10 topic pages, and 74 year/paper pages.
+- Shared `assets/site.css` and `assets/site.js`, plus `assets/quiz-core.js` (pure scoring logic) and generated `assets/questions.js`.
+- `assets/data/questions.json` holds 24 original BECE-style practice questions with explanations; `assets/data/papers.json` is the page index.
 - `papers/` holds the local archive: the 1990–2026 merged BECE Mathematics PDF plus verified 2024/2025 Paper 1 and Paper 2 files.
-- `assets/data/papers.json` is the page index.
 - Design spec: `docs/superpowers/specs/2026-11-25-emmaus-static-replica-design.md`
 - Implementation plan: `docs/plans/2026-11-25-emmaus-static-replica.md`
 
@@ -35,6 +35,14 @@ python3 tools/build_pages.py               # emit all HTML pages
 - Sign-in demo form notice (no data sent).
 - 390px and 1280px layouts with no horizontal overflow.
 - Zero broken internal links.
+- Quiz engine: 10-question run scored 100%, explanations shown, best score saved locally, URL filters auto-start.
+
+## Tests
+
+```bash
+python3 tools/build_pages.py   # generate assets/questions.js first
+node --test tests/*.test.js    # expects 13 passing tests
+```
 
 The BECE PDFs are intentionally **not committed**. They stay in the local `papers/` folder (gitignored) because they are third-party study reproductions and the repo is private. After cloning on another machine, copy the archive into `papers/` manually; the generated paper pages link to those files.
 

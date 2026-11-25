@@ -96,7 +96,7 @@ def qotd(data: dict) -> str:
       <div class="explanation hidden" data-explanation><strong>Working:</strong> {esc(q['explanation'])}</div>
       <div class="gate hidden" data-gate>
         <p class="small">That is the idea: answer a real-style question, see the marking, then go deeper.</p>
-        <a class="btn btn-primary btn-sm" href="sign-in.html">Practise the full paper</a>
+        <a class="btn btn-primary btn-sm" href="practice.html">Practise the full paper</a>
       </div>
     </div>
   </div>
@@ -276,9 +276,28 @@ def paper_page(year: int, paper: dict, prefix: str) -> str:
   <div class="card" style="margin-top:18px">
     <h3>Open the paper</h3>
     <p class="small">{note} The PDF is a local archive copy — no external request is made.</p>
-    <div class="card-actions"><a class="btn btn-primary btn-sm" href="{link}" target="_blank" rel="noopener">Open PDF</a><a class="btn btn-quiet btn-sm" href="{prefix}bece/mathematics.html">All years</a></div>
+    <div class="card-actions"><a class="btn btn-primary btn-sm" href="{link}" target="_blank" rel="noopener">Open PDF</a><a class="btn btn-quiet btn-sm" href="{prefix}practice.html?year={year}&paper={paper['no']}">Practice this paper</a><a class="btn btn-quiet btn-sm" href="{prefix}bece/mathematics.html">All years</a></div>
   </div>
   <div class="notice" style="margin-top:18px">Rights note: archived BECE papers are third-party reproductions. Keep this build local until publishing rights are confirmed.</div>
+</div></section>'''
+
+
+def practice_page(data: dict) -> str:
+    years = "".join(f'<option value="{y["year"]}">{y["year"]}</option>' for y in data["years"])
+    topics = "".join(f'<option value="{t["slug"]}">{esc(t["name"])}</option>' for t in data["topics"])
+    return f'''<section class="section"><div class="wrap">
+  <h1>Practice questions</h1>
+  <p class="lead" style="margin:10px 0 18px">Answer sample BECE-style questions, see the working immediately, and keep your best score on this device. No account and no network calls.</p>
+  <div class="notice" style="margin-bottom:18px">These are original practice questions written for this demo, not the official paper text. The archived PDFs remain available on each paper page.</div>
+  <form class="card quiz-controls" data-practice-controls>
+    <div class="grid grid-3">
+      <div class="field"><label for="practice-year">Year</label><select id="practice-year" data-practice-year><option value="">All years</option>{years}</select></div>
+      <div class="field"><label for="practice-topic">Topic</label><select id="practice-topic" data-practice-topic><option value="">All topics</option>{topics}</select></div>
+      <div class="field"><label for="practice-count">Questions</label><select id="practice-count" data-practice-count><option value="5">5</option><option value="10" selected>10</option><option value="0">All</option></select></div>
+    </div>
+    <button class="btn btn-primary btn-sm" type="submit">Start practice</button>
+  </form>
+  <div data-quiz-runner style="margin-top:20px"><p class="muted">Choose a filter and start practice.</p></div>
 </div></section>'''
 
 
@@ -288,6 +307,14 @@ def simple(title: str, body: str) -> str:
 
 def build() -> None:
     data = load_data()
+    questions = json.loads((ROOT / "assets/data/questions.json").read_text())
+    (ROOT / "assets/questions.js").write_text(
+        "(function (root, factory) { const data = factory(); "
+        "if (typeof module !== 'undefined' && module.exports) module.exports = data; "
+        "else root.QUESTION_BANK = data; })"
+        "(typeof globalThis !== 'undefined' ? globalThis : this, function () { return "
+        + json.dumps(questions, ensure_ascii=False) + "; });\n"
+    )
     render("index.html", "Home", home(data))
     render("bece/index.html", "BECE", bece_hub(data), "bece")
     render("bece/mathematics.html", "BECE Mathematics", maths_page(data), "bece")
@@ -330,6 +357,7 @@ def build() -> None:
   <button class="btn btn-primary" type="submit">Continue</button>
   <p class="small muted" style="margin-top:12px">Submitting shows a demo notice; nothing is sent anywhere.</p>
 </form>'''))
+    render("practice.html", "Practice", practice_page(data))
     links = "".join(
         f'<a class="hidden" data-searchable href="bece/papers/{y["year"]}/paper-{p["no"]}.html" data-kind="paper">{y["year"]} Mathematics {esc(p["label"])}</a>'
         for y in data["years"] for p in y["papers"]

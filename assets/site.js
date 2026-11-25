@@ -121,4 +121,107 @@
       setTimeout(() => toast.remove(), 2600);
     });
   });
+  /* Practice runner: filter, answer, explain, score, retry. */
+  document.addEventListener('DOMContentLoaded', () => {
+    const runner = $('[data-quiz-runner]');
+    if (!runner || !window.QuizCore || !window.QUESTION_BANK) return;
+    const form = $('[data-practice-controls]');
+    const yearSel = $('[data-practice-year]');
+    const topicSel = $('[data-practice-topic]');
+    const countSel = $('[data-practice-count]');
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const params = new URLSearchParams(location.search);
+    if (params.get('year')) yearSel.value = params.get('year');
+    if (params.get('topic')) topicSel.value = params.get('topic');
+    let state = null;
+
+    const filters = () => ({
+      year: yearSel.value,
+      topic: topicSel.value,
+      limit: Number(countSel.value) || 0,
+    });
+
+    function start() {
+      const questions = QuizCore.selectQuestions(QUESTION_BANK, filters());
+      if (!questions.length) {
+        runner.innerHTML = '<p class="muted">No questions match those filters. Try another year or topic.</p>';
+        state = null;
+        return;
+      }
+      state = { questions, index: 0, answers: {}, locked: false };
+      render();
+    }
+
+    function render() {
+      if (state.index >= state.questions.length) return finish();
+      const q = state.questions[state.index];
+      const pct = Math.round((state.index / state.questions.length) * 100);
+      const opts = q.options.map((text, i) =>
+        `<button class="option" type="button" data-practice-option="${i}"><span class="letter">${'ABCD'[i]}</span><span>${esc(text)}</span></button>`
+      ).join('');
+      runner.innerHTML = `
+<div class="quiz-shell" data-quiz-shell>
+  <div class="quiz-topline"><span>Question ${state.index + 1} of ${state.questions.length}</span><span>${esc(q.year)} · ${esc(q.topic.replace(/-/g, ' '))}</span></div>
+  <div class="progress"><span style="width:${pct}%"></span></div>
+  <div class="quiz-question">${esc(q.prompt)}</div>
+  <div class="options">${opts}</div>
+  <div class="verdict hidden" data-practice-verdict></div>
+  <div class="explanation hidden" data-practice-explanation></div>
+  <button class="btn btn-primary btn-sm quiz-next hidden" type="button" data-practice-next>Next question →</button>
+</div>`;
+    }
+
+    function choose(i) {
+      if (!state || state.locked) return;
+      state.locked = true;
+      const q = state.questions[state.index];
+      const right = QuizCore.scoreAnswer(q, i);
+      state.answers[q.id] = i;
+      runner.querySelectorAll('[data-practice-option]').forEach(btn => {
+        const n = Number(btn.dataset.practiceOption);
+        btn.disabled = true;
+        btn.classList.toggle('correct', n === q.answerIndex);
+        btn.classList.toggle('wrong', !right && n === i);
+        btn.classList.toggle('dim', n !== q.answerIndex && n !== i);
+      });
+      const verdict = $('[data-practice-verdict]', runner);
+      verdict.textContent = right ? 'Correct — well done.' : 'Not quite — check the working below.';
+      verdict.classList.remove('hidden');
+      const box = $('[data-practice-explanation]', runner);
+      box.innerHTML = `<strong>Working:</strong> ${esc(q.explanation)}`;
+      box.classList.remove('hidden');
+      $('[data-practice-next]', runner).classList.remove('hidden');
+    }
+
+    function finish() {
+      const result = QuizCore.gradeAttempt(state.questions, state.answers);
+      const key = QuizCore.quizKey(params.get('year') || 'all', params.get('paper') || 'all');
+      let best = result.percentage;
+      try {
+        const stored = Number(localStorage.getItem(key));
+        if (stored > best) best = stored;
+        else localStorage.setItem(key, String(best));
+      } catch (_) {}
+      const review = state.questions.map((q, i) => {
+        const d = result.details[i];
+        const correctText = esc(q.options[q.answerIndex]);
+        return `<div class="review-item"><h4><span class="badge ${d.correct ? 'ok' : 'no'}">${d.correct ? 'Correct' : 'Wrong'}</span>${esc(q.prompt)}</h4>
+          <p class="small">Answer: <strong>${correctText}</strong></p><p>${esc(q.explanation)}</p></div>`;
+      }).join('');
+      runner.innerHTML = `<div class="quiz-shell">
+        <div class="result-box"><b>${result.percentage}%</b><span>${result.correct} of ${result.total} correct</span><p class="small muted" style="margin-top:8px">Best on this device: ${best}%</p></div>
+        <div class="card-actions"><button class="btn btn-primary btn-sm" type="button" data-practice-retry>Try again</button><a class="btn btn-quiet btn-sm" href="bece/index.html">Browse papers</a></div>
+        <h3 style="margin:20px 0 8px">Review</h3>${review}
+      </div>`;
+    }
+
+    form?.addEventListener('submit', e => { e.preventDefault(); start(); });
+    runner.addEventListener('click', e => {
+      const opt = e.target.closest('[data-practice-option]');
+      if (opt) return choose(Number(opt.dataset.practiceOption));
+      if (e.target.closest('[data-practice-next]')) { state.index++; state.locked = false; render(); }
+      if (e.target.closest('[data-practice-retry]')) start();
+    });
+    if (params.get('year') || params.get('topic')) start();
+  });
 })();

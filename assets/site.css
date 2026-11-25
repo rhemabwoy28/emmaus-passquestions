@@ -215,3 +215,20 @@ th { font: 700 12px var(--font-mono); color: var(--ink-400); text-transform: upp
 .footer-grid li { margin-bottom: 6px; }
 .footer-bottom { margin-top: 26px; padding-top: 16px; border-top: 1px solid #ffffff26; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; }
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 90; background: var(--brand); color: #fff; padding: 12px 18px; border-radius: 999px; font-weight: 650; box-shadow: var(--shadow); }
+
+/* Practice runner */
+.quiz-controls .grid { align-items: end; }
+.quiz-shell { background: var(--paper); border: 1px solid var(--rule); border-radius: 18px; padding: 22px; box-shadow: var(--shadow); }
+.quiz-topline { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-bottom: 14px; font-size: 13px; color: var(--ink-400); }
+.progress { height: 8px; background: var(--chip); border-radius: 999px; overflow: hidden; margin-bottom: 18px; }
+.progress > span { display: block; height: 100%; background: var(--brand); width: 0; transition: width .25s ease; }
+.quiz-question { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+.quiz-next { margin-top: 16px; }
+.result-box { text-align: center; padding: 18px; background: var(--chip); border-radius: 14px; margin-bottom: 18px; }
+.result-box b { display: block; font: 800 40px var(--font-mono); color: var(--brand); }
+.review-item { padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.review-item h4 { font-size: 15px; margin-bottom: 6px; }
+.review-item p { font-size: 13px; margin-top: 6px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font: 700 11px var(--font-mono); margin-right: 8px; }
+.badge.ok { background: color-mix(in srgb, var(--ok) 16%, var(--paper)); color: var(--ok); }
+.badge.no { background: color-mix(in srgb, var(--bad) 14%, var(--paper)); color: var(--bad); }
