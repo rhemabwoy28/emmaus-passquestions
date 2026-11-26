@@ -360,9 +360,12 @@ def build() -> None:
 <p class="lead">Use the material here for your own study. Do not resell it, bulk-download it or republish it as your own.</p>
 <p>BECE questions originate with WAEC. These files are third-party study reproductions kept in a local archive. Publishing or redistributing them may require permission — check rights before making this site public.</p>
 <p>Automated marking, if added later, is a study aid and not an official assessment.</p>'''))
-    render("download.html", "Download", simple("Download the papers", '''
+    download_action = ('<span class="muted small">The archive stays local and is not published online.</span>'
+                       if os.environ.get("EMMAUS_PUBLIC") else
+                       '<a class="btn btn-primary btn-sm" href="papers/BECE_Mathematics_1990-2026_MERGED.pdf">Open merged PDF</a>')
+    render("download.html", "Download", simple("Download the papers", f'''
 <p class="lead">The PDF archive lives in this project folder, so it can be opened offline once the site files are on your device.</p>
-<div class="card"><h3>BECE Mathematics archive</h3><p class="small">1990–2026, merged into one PDF, plus verified 2024 and 2025 papers.</p><div class="card-actions"><a class="btn btn-primary btn-sm" href="papers/BECE_Mathematics_1990-2026_MERGED.pdf">Open merged PDF</a></div></div>
+<div class="card"><h3>BECE Mathematics archive</h3><p class="small">1990–2026, merged into one PDF, plus verified 2024 and 2025 papers.</p><div class="card-actions">{download_action}</div></div>
 <div class="notice" style="margin-top:18px">No app, no install, no data needed after download.</div>'''))
     render("leaderboard.html", "Leaderboard", simple("Leaderboard", '''
 <p class="lead">A bit of friendly competition helps some students keep going. These demo rows are placeholders — your own best scores below are saved only on this device.</p>
