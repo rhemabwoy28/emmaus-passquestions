@@ -32,12 +32,14 @@ python3 tools/build_pages.py               # emit all HTML pages
 
 ## What is here
 
-- 99 generated HTML pages: home, about, contact, privacy, terms, download, leaderboard, sign-in (visual only), search, practice, 404, BECE hub, Mathematics subject page, 10 topic pages, and 74 year/paper pages.
+- 169 generated HTML pages: home, about, contact, privacy, terms, download, leaderboard, sign-in (visual only), search, practice, 404, BECE hub, 10 subject pages, 71 topic pages, and 74 year/paper pages.
 - Shared `assets/site.css` and `assets/site.js`, plus `assets/quiz-core.js` (pure scoring logic) and generated `assets/questions.js`.
-- `assets/data/questions.json` holds 24 original BECE-style practice questions with explanations; `assets/data/papers.json` is the page index.
+- `assets/data/questions.json` holds original BECE-style practice questions with explanations across 10 subjects; `assets/data/papers.json` is the subject/topic/paper index.
+- Subjects: Mathematics, English Language, Integrated Science, Social Studies, Religious & Moral Education, Basic Design & Technology, Home Economics, Ghanaian Language & Culture, French and ICT & Computing.
 - Question of the day rotates automatically from the question bank, keyed to the UTC date.
-- Topic pages link straight into filtered practice; practice can also filter by year, paper and topic.
-- Search covers papers, topics and practice questions, and honours `?q=` links from the header search box.
+- Topic pages link straight into filtered practice; practice can filter by subject, year, paper and topic.
+- Search covers papers, subjects, topics, question prompts and answer options, and honours `?q=` links from the header search box.
+- 152 starter questions: every one of the 71 topics has at least two questions, with worked explanations.
 - The leaderboard shows best scores saved on this device alongside the demo rows.
 - `papers/` holds the local archive: the 1990–2026 merged BECE Mathematics PDF plus verified 2024/2025 Paper 1 and Paper 2 files.
 - Design spec: `docs/superpowers/specs/2026-11-25-emmaus-static-replica-design.md`
@@ -59,7 +61,7 @@ python3 tools/build_pages.py               # emit all HTML pages
 
 ```bash
 python3 tools/build_pages.py   # generate assets/questions.js first
-node --test tests/*.test.js    # expects 17 passing tests
+node --test tests/*.test.js    # expects 20 passing tests
 python3 tools/check_links.py   # verifies local href/src targets
 ```
 

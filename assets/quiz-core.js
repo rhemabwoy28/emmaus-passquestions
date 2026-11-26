@@ -18,6 +18,9 @@
     if (filters.topic) {
       out = out.filter(q => q.topic === filters.topic);
     }
+    if (filters.subject) {
+      out = out.filter(q => q.subject === filters.subject);
+    }
     if (filters.paper != null && filters.paper !== '') {
       const paper = Number(filters.paper);
       out = out.filter(q => Number(q.paper) === paper);

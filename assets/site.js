@@ -54,7 +54,7 @@
         const explanation = $('[data-explanation]', quiz);
         if (explanation) explanation.innerHTML = `<strong>Working:</strong> ${esc(q.explanation)}`;
         const meta = $('.q-head .muted', quiz);
-        if (meta) meta.textContent = `${q.year} · ${q.topic.replace(/-/g, ' ')} · new question daily`;
+        if (meta) meta.textContent = `${q.subject.replace(/-/g, ' ')} · ${q.year} · new question daily`;
         delete quiz.dataset.done;
       }
     }
@@ -152,8 +152,13 @@
         if (!key || !key.startsWith('emmaus:best:')) continue;
         const score = Number(localStorage.getItem(key));
         if (!Number.isFinite(score)) continue;
-        const [year, paper, topic] = key.slice('emmaus:best:'.length).split(':');
-        const label = `${year === 'all' ? 'All years' : year} · ${paper === 'all' ? 'All papers' : `Paper ${paper}`}${topic ? ` · ${topic.replace(/-/g, ' ')}` : ''}`;
+        const parts = key.slice('emmaus:best:'.length).split(':');
+        const [year, paper] = parts;
+        const rest = parts.slice(2);
+        const subject = rest.length > 1 ? rest[0] : '';
+        const topic = rest.length ? rest[rest.length - 1] : '';
+        const label = `${year === 'all' ? 'All years' : year} · ${paper === 'all' ? 'All papers' : `Paper ${paper}`}`
+          + `${subject ? ` · ${subject.replace(/-/g, ' ')}` : ''}${topic ? ` · ${topic.replace(/-/g, ' ')}` : ''}`;
         entries.push({ label, score });
       }
     } catch (_) {}
@@ -169,20 +174,38 @@
     const runner = $('[data-quiz-runner]');
     if (!runner || !window.QuizCore || !window.QUESTION_BANK) return;
     const form = $('[data-practice-controls]');
+    const subjectSel = $('[data-practice-subject]');
     const yearSel = $('[data-practice-year]');
     const paperSel = $('[data-practice-paper]');
     const topicSel = $('[data-practice-topic]');
     const countSel = $('[data-practice-count]');
     const params = new URLSearchParams(location.search);
+    if (params.get('subject') && subjectSel) subjectSel.value = params.get('subject');
+    function syncTopics() {
+      if (!topicSel) return;
+      const subject = subjectSel?.value || '';
+      Array.from(topicSel.options).forEach(opt => {
+        if (!opt.value) return;
+        const show = !subject || opt.dataset.subject === subject;
+        opt.hidden = !show;
+        opt.disabled = !show;
+      });
+      const chosen = topicSel.value;
+      const chosenOpt = topicSel.querySelector(`option[value="${chosen}"]`);
+      if (chosen && (!chosenOpt || chosenOpt.disabled)) topicSel.value = '';
+    }
+    syncTopics();
     if (params.get('year')) yearSel.value = params.get('year');
     if (params.get('paper') && paperSel) paperSel.value = params.get('paper');
-    if (params.get('topic')) topicSel.value = params.get('topic');
+    if (params.get('topic') && topicSel) topicSel.value = params.get('topic');
+    subjectSel?.addEventListener('change', syncTopics);
     let state = null;
 
     const filters = () => ({
+      subject: subjectSel?.value || '',
       year: yearSel.value,
       paper: paperSel?.value || '',
-      topic: topicSel.value,
+      topic: topicSel?.value || '',
       limit: Number(countSel.value) || 0,
     });
 
@@ -206,7 +229,7 @@
       ).join('');
       runner.innerHTML = `
 <div class="quiz-shell" data-quiz-shell>
-  <div class="quiz-topline"><span>Question ${state.index + 1} of ${state.questions.length}</span><span>${esc(q.year)} · ${esc(q.topic.replace(/-/g, ' '))}</span></div>
+  <div class="quiz-topline"><span>Question ${state.index + 1} of ${state.questions.length}</span><span>${esc((q.subject || '').replace(/-/g, ' '))} · ${esc(q.year)} · ${esc(q.topic.replace(/-/g, ' '))}</span></div>
   <div class="progress"><span style="width:${pct}%"></span></div>
   <div class="quiz-question">${esc(q.prompt)}</div>
   <div class="options">${opts}</div>
@@ -240,7 +263,10 @@
 
     function finish() {
       const result = QuizCore.gradeAttempt(state.questions, state.answers);
-      const key = QuizCore.quizKey(yearSel.value || 'all', paperSel?.value || 'all', topicSel.value || '');
+      const subject = subjectSel?.value || '';
+      const topic = topicSel?.value || '';
+      const label = subject ? `${subject}${topic ? `:${topic}` : ''}` : topic;
+      const key = QuizCore.quizKey(yearSel.value || 'all', paperSel?.value || 'all', label);
       let best = result.percentage;
       try {
         const stored = Number(localStorage.getItem(key));
@@ -267,6 +293,6 @@
       if (e.target.closest('[data-practice-next]')) { state.index++; state.locked = false; render(); }
       if (e.target.closest('[data-practice-retry]')) start();
     });
-    if (params.get('year') || params.get('paper') || params.get('topic')) start();
+    if (params.get('subject') || params.get('year') || params.get('paper') || params.get('topic')) start();
   });
 })();

@@ -28,6 +28,23 @@ test('question topics exist in the topic index', () => {
   }
 });
 
+test('every question belongs to a known subject and its own subject topic', () => {
+  const bySubject = new Map(papers.subjects.map(s => [s.slug, s]));
+  for (const q of bank) {
+    assert.ok(q.subject, `${q.id} needs a subject`);
+    const subject = bySubject.get(q.subject);
+    assert.ok(subject, `${q.id} has unknown subject ${q.subject}`);
+    assert.ok(subject.topics.some(t => t.slug === q.topic),
+      `${q.id}: topic ${q.topic} is not in subject ${q.subject}`);
+  }
+});
+
+test('every subject topic has at least one practice question', () => {
+  for (const t of papers.topics) {
+    assert.ok(bank.some(q => q.topic === t.slug), `no question for topic ${t.slug}`);
+  }
+});
+
 test('question years are within the archive range', () => {
   for (const q of bank) {
     assert.ok(q.year >= 1990 && q.year <= 2026, `${q.id} has invalid year ${q.year}`);
