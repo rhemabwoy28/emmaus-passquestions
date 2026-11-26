@@ -57,3 +57,23 @@ test('gradeAttempt rounds percentage to the nearest integer', () => {
 test('quizKey builds a stable local-storage key', () => {
   assert.equal(core.quizKey(2025, 1), 'emmaus:best:2025:1');
 });
+
+test('quizKey includes an optional topic in the storage key', () => {
+  assert.equal(core.quizKey(2025, 1, 'algebra'), 'emmaus:best:2025:1:algebra');
+});
+
+test('selectQuestions filters by paper', () => {
+  assert.deepEqual(core.selectQuestions(bank, { paper: 2 }).map(q => q.id), ['q4']);
+});
+
+test('dailyQuestion is stable within one UTC day', () => {
+  const morning = core.dailyQuestion(bank, new Date('2026-11-26T01:00:00Z'));
+  const evening = core.dailyQuestion(bank, new Date('2026-11-26T23:00:00Z'));
+  assert.equal(evening.id, morning.id);
+});
+
+test('dailyQuestion moves to the next question the next day', () => {
+  const today = core.dailyQuestion(bank, new Date('2026-11-26T01:00:00Z'));
+  const tomorrow = core.dailyQuestion(bank, new Date('2026-11-27T01:00:00Z'));
+  assert.notEqual(tomorrow.id, today.id);
+});
