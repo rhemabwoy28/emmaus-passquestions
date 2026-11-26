@@ -66,6 +66,11 @@ test('selectQuestions filters by paper', () => {
   assert.deepEqual(core.selectQuestions(bank, { paper: 2 }).map(q => q.id), ['q4']);
 });
 
+test('selectQuestions filters by subject', () => {
+  const mixed = bank.map(q => ({ ...q, subject: q.year === 2025 ? 'english' : 'mathematics' }));
+  assert.deepEqual(core.selectQuestions(mixed, { subject: 'english' }).map(q => q.id), ['q3', 'q4']);
+});
+
 test('dailyQuestion is stable within one UTC day', () => {
   const morning = core.dailyQuestion(bank, new Date('2026-11-26T01:00:00Z'));
   const evening = core.dailyQuestion(bank, new Date('2026-11-26T23:00:00Z'));

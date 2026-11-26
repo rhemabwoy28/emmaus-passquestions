@@ -12,13 +12,66 @@ ARCHIVE = Path("/root/jobsearch/bece_archive")
 EXTRA = [Path("/root/jobsearch/bece2024"), Path("/root/jobsearch/bece2025")]
 
 YEARS = list(range(1990, 2027))
-TOPICS = [
-    ("number-bases", "Number bases"), ("fractions-decimals", "Fractions and decimals"),
-    ("indices", "Indices and standard form"), ("algebra", "Algebra"),
-    ("equations", "Equations and inequalities"), ("geometry", "Geometry"),
-    ("mensuration", "Mensuration"), ("trigonometry", "Trigonometry"),
-    ("statistics", "Statistics and probability"), ("sets", "Sets"),
+SUBJECTS = [
+    {"slug": "mathematics", "name": "Mathematics", "topics": [
+        ("number-bases", "Number bases"), ("fractions-decimals", "Fractions and decimals"),
+        ("indices", "Indices and standard form"), ("algebra", "Algebra"),
+        ("equations", "Equations and inequalities"), ("geometry", "Geometry"),
+        ("mensuration", "Mensuration"), ("trigonometry", "Trigonometry"),
+        ("statistics", "Statistics and probability"), ("sets", "Sets"),
+    ]},
+    {"slug": "english", "name": "English Language", "topics": [
+        ("eng-comprehension", "Comprehension"), ("eng-vocabulary", "Vocabulary"),
+        ("eng-grammar", "Grammar and structure"), ("eng-spelling", "Spelling and dictation"),
+        ("eng-summary", "Summary writing"), ("eng-composition", "Composition"),
+        ("eng-oral", "Oral English"),
+    ]},
+    {"slug": "integrated-science", "name": "Integrated Science", "topics": [
+        ("sci-matter", "Matter"), ("sci-energy", "Energy"), ("sci-living-things", "Living things"),
+        ("sci-environment", "Environment"), ("sci-health", "Health and safety"),
+        ("sci-electricity", "Electricity"), ("sci-forces", "Forces and machines"),
+        ("sci-chemical-changes", "Chemical changes"),
+    ]},
+    {"slug": "social-studies", "name": "Social Studies", "topics": [
+        ("sst-citizenship", "Citizenship"), ("sst-physical-environment", "Physical environment"),
+        ("sst-human-environment", "Human environment"), ("sst-history-of-ghana", "History of Ghana"),
+        ("sst-government", "Government"), ("sst-economics", "Economics"),
+        ("sst-social-issues", "Social issues"),
+    ]},
+    {"slug": "rme", "name": "Religious & Moral Education", "topics": [
+        ("rme-christianity", "Christianity"), ("rme-islam", "Islam"),
+        ("rme-traditional-religion", "Traditional religion"), ("rme-moral-values", "Moral values"),
+        ("rme-worship", "Worship"), ("rme-festivals", "Religious festivals"),
+    ]},
+    {"slug": "bdt", "name": "Basic Design & Technology", "topics": [
+        ("bdt-woodwork", "Woodwork"), ("bdt-metalwork", "Metalwork"),
+        ("bdt-technical-drawing", "Technical drawing"), ("bdt-electronics", "Electronics"),
+        ("bdt-design", "Design and graphics"), ("bdt-tools-safety", "Tools and safety"),
+    ]},
+    {"slug": "home-economics", "name": "Home Economics", "topics": [
+        ("home-food-and-nutrition", "Food and nutrition"),
+        ("home-clothing-and-textiles", "Clothing and textiles"),
+        ("home-management", "Home management"), ("home-child-care", "Child care"),
+        ("home-hygiene", "Hygiene and sanitation"), ("home-cooking", "Cooking and baking"),
+    ]},
+    {"slug": "ghanaian-language", "name": "Ghanaian Language & Culture", "topics": [
+        ("ghc-proverbs", "Proverbs"), ("ghc-idioms", "Idioms"), ("ghc-folktales", "Folktales"),
+        ("ghc-grammar", "Grammar"), ("ghc-comprehension", "Comprehension"),
+        ("ghc-cultural-values", "Cultural values"), ("ghc-translation", "Translation"),
+    ]},
+    {"slug": "french", "name": "French", "topics": [
+        ("fre-greetings", "Greetings"), ("fre-numbers", "Numbers"), ("fre-colours", "Colours"),
+        ("fre-family", "Family"), ("fre-school", "School"), ("fre-verbs", "Verbs"),
+        ("fre-questions", "Asking questions"),
+    ]},
+    {"slug": "ict", "name": "ICT & Computing", "topics": [
+        ("ict-basics", "Computer basics"), ("ict-hardware", "Hardware"),
+        ("ict-software", "Software"), ("ict-internet-safety", "Internet safety"),
+        ("ict-word-processing", "Word processing"), ("ict-spreadsheets", "Spreadsheets"),
+        ("ict-programming", "Programming basics"),
+    ]},
 ]
+TOPICS = [t for s in SUBJECTS for t in s["topics"]]
 
 SAMPLE_QUESTIONS = [
     {
@@ -44,8 +97,17 @@ def inventory() -> dict:
             {"no": 2, "label": "Paper 2 · Essay", "file": files[1] if len(files) > 1 else None},
         ]
         years.append({"year": y, "papers": papers})
-    return {"years": years, "topics": [{"slug": s, "name": n} for s, n in TOPICS],
-            "questions": SAMPLE_QUESTIONS}
+    subjects = [
+        {"slug": s["slug"], "name": s["name"],
+         "topics": [{"slug": slug, "name": name, "subject": s["slug"]} for slug, name in s["topics"]]}
+        for s in SUBJECTS
+    ]
+    return {
+        "years": years,
+        "subjects": subjects,
+        "topics": [t for s in subjects for t in s["topics"]],
+        "questions": SAMPLE_QUESTIONS,
+    }
 
 
 def load_data(force: bool = False) -> dict:
@@ -103,8 +165,9 @@ def qotd(data: dict) -> str:
 </section>'''
 
 
-def home(data: dict) -> str:
+def home(data: dict, questions: list) -> str:
     years = data["years"]
+    practice_count = len(questions)
     activity = "".join(
         f'<div class="marquee-item"><strong>{y["year"]}</strong> Mathematics paper added · BECE</div>'
         for y in years[-12:]
@@ -114,10 +177,10 @@ def home(data: dict) -> str:
   <div class="wrap">
     <span class="pill"><span class="pill-dot"></span> BECE revision, free on any phone</span>
     <h1 style="margin-top:16px">Pass your BECE.<br><span>Free.</span></h1>
-    <p class="lead">Practise BECE Mathematics past questions by year and topic, check the working, and walk into the exam hall knowing what to expect.</p>
+    <p class="lead">Practise BECE questions across every subject and topic, check the working, and walk into the exam hall knowing what to expect.</p>
     <div class="hero-actions">
-      <a class="btn btn-wa" href="download.html">Get the past questions</a>
-      <a class="btn btn-outline" href="bece/index.html">Browse papers</a>
+      <a class="btn btn-wa" href="bece/index.html">Browse all subjects</a>
+      <a class="btn btn-outline" href="practice.html">Start practising</a>
     </div>
     <p class="hero-foot">No payment. No app required. Works on any phone.</p>
     <p style="margin-top:18px"><a class="pill" href="#question-of-the-day"><span class="pill-dot"></span> Question of the day · try one now ↓</a></p>
@@ -170,9 +233,9 @@ def home(data: dict) -> str:
 <section class="section">
   <div class="wrap">
     <div class="grid grid-4">
-      <div class="stat"><b>37</b><span class="small">years of BECE Maths (1990–2026)</span></div>
-      <div class="stat"><b>10</b><span class="small">topics covered</span></div>
-      <div class="stat"><b>2</b><span class="small">papers per year where available</span></div>
+      <div class="stat"><b>{len(data["subjects"])}</b><span class="small">BECE subjects</span></div>
+      <div class="stat"><b>{len(data["topics"])}</b><span class="small">topics covered</span></div>
+      <div class="stat"><b>{practice_count}</b><span class="small">practice questions</span></div>
       <div class="stat"><b>0</b><span class="small">payment, ever</span></div>
     </div>
   </div>
@@ -207,72 +270,100 @@ def home(data: dict) -> str:
 </section>'''
 
 
-def bece_hub(data: dict) -> str:
+def bece_hub(data: dict, questions: list) -> str:
     rows = "".join(
         f'<li><a href="papers/{y["year"]}/paper-{p["no"]}.html">{y["year"]} · {esc(p["label"])}</a><span class="muted small">Mathematics</span></li>'
         for y in data["years"] for p in y["papers"]
+    )
+    subjects = "".join(
+        f'<div class="card"><h3><a href="{s["slug"]}.html">{esc(s["name"])}</a></h3>'
+        f'<p class="small">{len(s["topics"])} topics · {sum(1 for q in questions if q.get("subject") == s["slug"])} practice questions</p></div>'
+        for s in data["subjects"]
     )
     return f'''
 <section class="section"><div class="wrap">
   <span class="pill">BECE · Junior High</span>
   <h1 style="margin-top:14px">BECE past questions</h1>
-  <p class="lead" style="margin:10px 0 22px">Every BECE Mathematics paper and marking scheme we have, organised by year. Browse a paper, or practise one topic at a time.</p>
-  <div class="card"><h3>Browse topics</h3><p class="small">Number bases, algebra, geometry, statistics and more.</p><div class="card-actions"><a class="btn btn-quiet btn-sm" href="topics/index.html">See all topics</a></div></div>
+  <p class="lead" style="margin:10px 0 22px">Practice questions and topics for every BECE subject, plus the Mathematics paper archive by year.</p>
+  <h2>Subjects</h2><div class="grid grid-3" style="margin:16px 0 28px">{subjects}</div>
+  <div class="card"><h3>Browse topics</h3><p class="small">Algebra, comprehension, integrated science, social studies and more — across all subjects.</p><div class="card-actions"><a class="btn btn-quiet btn-sm" href="topics/index.html">See all topics</a></div></div>
   <h2 style="margin-top:28px">Past papers by year</h2>
   <div class="table-wrap"><ul class="list">{rows}</ul></div>
 </div></section>'''
 
 
-def maths_page(data: dict) -> str:
-    rows = "".join(
-        f'<li><a href="papers/{y["year"]}/paper-{p["no"]}.html">{y["year"]} · {esc(p["label"])}</a><span class="muted small">{"PDF available" if p["file"] else "index only"}</span></li>'
-        for y in data["years"] for p in y["papers"]
+def subject_page(subject: dict, data: dict, questions: list) -> str:
+    subject_questions = [q for q in questions if q.get("subject") == subject["slug"]]
+    topic_rows = "".join(
+        f'<li><a href="topics/{t["slug"]}.html">{esc(t["name"])}</a>'
+        f'<span class="muted small">{sum(1 for q in subject_questions if q["topic"] == t["slug"])} questions</span></li>'
+        for t in subject["topics"]
     )
+    rows = ""
+    if subject["slug"] == "mathematics":
+        rows = "".join(
+            f'<li><a href="papers/{y["year"]}/paper-{p["no"]}.html">{y["year"]} · {esc(p["label"])}</a><span class="muted small">{"PDF available" if p["file"] else "index only"}</span></li>'
+            for y in data["years"] for p in y["papers"]
+        )
     return f'''
 <section class="section"><div class="wrap">
-  <p class="small"><a href="index.html">BECE</a> / Mathematics</p>
-  <h1 style="margin:10px 0">BECE Mathematics</h1>
-  <p class="lead">Past questions and marking schemes for BECE Mathematics, from 1990 to 2026.</p>
+  <p class="small"><a href="index.html">BECE</a> / {esc(subject['name'])}</p>
+  <h1 style="margin:10px 0">BECE {esc(subject['name'])}</h1>
+  <p class="lead">Original BECE-style practice questions and topics for {esc(subject['name'])}, with working for every answer.</p>
   <div class="grid grid-3" style="margin:20px 0">
-    <div class="stat"><b>{len(data["years"])}</b><span class="small">years indexed</span></div>
-    <div class="stat"><b>{len(data["topics"])}</b><span class="small">topics</span></div>
-    <div class="stat"><b>2</b><span class="small">paper types</span></div>
+    <div class="stat"><b>{len(subject['topics'])}</b><span class="small">topics</span></div>
+    <div class="stat"><b>{len(subject_questions)}</b><span class="small">practice questions</span></div>
+    <div class="stat"><b>0</b><span class="small">payment, ever</span></div>
   </div>
-  <h2>Papers</h2>
-  <ul class="list">{rows}</ul>
+  <div class="card-actions" style="margin-bottom:24px"><a class="btn btn-primary btn-sm" href="../practice.html?subject={subject['slug']}">Practise {esc(subject['name'])}</a><a class="btn btn-quiet btn-sm" href="topics/index.html">All topics</a></div>
+  <h2>Topics</h2><ul class="list">{topic_rows}</ul>
+  {'<h2 style="margin-top:28px">Archived papers</h2><ul class="list">' + rows + '</ul>' if rows else ''}
 </div></section>'''
 
 
-def topics_index(data: dict) -> str:
-    cards = "".join(
-        f'<div class="card"><h3><a href="{t["slug"]}.html">{esc(t["name"])}</a></h3><p class="small">Practise {esc(t["name"]).lower()} questions across BECE years.</p></div>'
-        for t in data["topics"]
-    )
-    return f'<section class="section"><div class="wrap"><h1>BECE Mathematics topics</h1><p class="lead" style="margin:10px 0 20px">Pick a topic and work through questions from past papers.</p><div class="grid grid-3">{cards}</div></div></section>'
+def topics_index(data: dict, questions: list) -> str:
+    blocks = []
+    for s in data["subjects"]:
+        cards = "".join(
+            f'<div class="card"><h3><a href="{t["slug"]}.html">{esc(t["name"])}</a></h3>'
+            f'<p class="small">{sum(1 for q in questions if q["topic"] == t["slug"])} practice questions</p></div>'
+            for t in s["topics"]
+        )
+        blocks.append(
+            f'<h2 style="margin-top:26px"><a href="../{s["slug"]}.html">{esc(s["name"])}</a></h2>'
+            f'<div class="grid grid-3" style="margin-top:12px">{cards}</div>'
+        )
+    return ('<section class="section"><div class="wrap"><h1>BECE topics by subject</h1>'
+            '<p class="lead" style="margin:10px 0 20px">Pick a subject, then a topic, and work through questions with the marking scheme.</p>'
+            + "".join(blocks) + '</div></section>')
 
 
 def topic_page(t: dict, data: dict, questions: list) -> str:
+    subject = next(s for s in data["subjects"] if s["slug"] == t["subject"])
     topic_questions = [q for q in questions if q["topic"] == t["slug"]]
-    rows = "".join(
-        f'<li><a href="../papers/{y["year"]}/paper-1.html">{y["year"]} Paper 1</a><span class="muted small">PDF</span></li>'
-        for y in data["years"][-10:]
-    )
     samples = "".join(
         f'<li><span>{esc(q["prompt"])}</span><span class="muted small">'
-        f'<a href="../../practice.html?topic={t["slug"]}&amp;year={q["year"]}">Answer →</a></span></li>'
+        f'<a href="../../practice.html?subject={t["subject"]}&amp;topic={t["slug"]}&amp;year={q["year"]}">Answer →</a></span></li>'
         for q in topic_questions[:6]
     )
+    related = ""
+    if t["subject"] == "mathematics":
+        rows = "".join(
+            f'<li><a href="../papers/{y["year"]}/paper-1.html">{y["year"]} Paper 1</a><span class="muted small">PDF</span></li>'
+            for y in data["years"][-10:]
+        )
+        related = f'<h2 style="margin-top:24px">Related papers</h2><ul class="list">{rows}</ul>'
     return f'''<section class="section"><div class="wrap">
-  <p class="small"><a href="index.html">Topics</a> / {esc(t['name'])}</p>
+  <p class="small"><a href="index.html">Topics</a> / <a href="../{t['subject']}.html">{esc(subject['name'])}</a> / {esc(t['name'])}</p>
   <h1 style="margin:10px 0">{esc(t['name'])}</h1>
-  <p class="lead">Practise {esc(t['name']).lower()} with BECE-style questions and see the working for every answer.</p>
+  <p class="lead">Practise {esc(t['name']).lower()} with BECE-style {esc(subject['name'])} questions and see the working for every answer.</p>
   <div class="card" style="margin:18px 0">
     <h3>{len(topic_questions)} practice question{'s' if len(topic_questions) != 1 else ''} available</h3>
     <p class="small">Timed by you, marked on this device, no account needed.</p>
-    <div class="card-actions"><a class="btn btn-primary btn-sm" href="../../practice.html?topic={t['slug']}">Practise {esc(t['name']).lower()}</a></div>
+    <div class="card-actions"><a class="btn btn-primary btn-sm" href="../../practice.html?subject={t['subject']}&amp;topic={t['slug']}">Practise {esc(t['name']).lower()}</a></div>
   </div>
   {'<h2>Sample questions</h2><ul class="list">' + samples + '</ul>' if samples else ''}
-  <h2 style="margin-top:24px">Related papers</h2><ul class="list">{rows}</ul>
+  {related}
 </div></section>'''
 
 
@@ -294,7 +385,7 @@ def paper_page(year: int, paper: dict, prefix: str) -> str:
   <div class="card" style="margin-top:18px">
     <h3>Open the paper</h3>
     <p class="small">{note}</p>
-    <div class="card-actions">{actions}<a class="btn btn-quiet btn-sm" href="{prefix}practice.html?year={year}&paper={paper['no']}">Practice this paper</a><a class="btn btn-quiet btn-sm" href="{prefix}bece/mathematics.html">All years</a></div>
+    <div class="card-actions">{actions}<a class="btn btn-quiet btn-sm" href="{prefix}practice.html?subject=mathematics&amp;year={year}&amp;paper={paper['no']}">Practice this paper</a><a class="btn btn-quiet btn-sm" href="{prefix}bece/mathematics.html">All years</a></div>
   </div>
   <div class="notice" style="margin-top:18px">{rights}</div>
 </div></section>'''
@@ -302,13 +393,18 @@ def paper_page(year: int, paper: dict, prefix: str) -> str:
 
 def practice_page(data: dict) -> str:
     years = "".join(f'<option value="{y["year"]}">{y["year"]}</option>' for y in data["years"])
-    topics = "".join(f'<option value="{t["slug"]}">{esc(t["name"])}</option>' for t in data["topics"])
+    subjects = "".join(f'<option value="{s["slug"]}">{esc(s["name"])}</option>' for s in data["subjects"])
+    topics = "".join(
+        f'<option value="{t["slug"]}" data-subject="{t["subject"]}">{esc(t["name"])}</option>'
+        for t in data["topics"]
+    )
     return f'''<section class="section"><div class="wrap">
   <h1>Practice questions</h1>
-  <p class="lead" style="margin:10px 0 18px">Answer sample BECE-style questions, see the working immediately, and keep your best score on this device. No account and no network calls.</p>
-  <div class="notice" style="margin-bottom:18px">These are original practice questions written for this demo, not the official paper text. The archived PDFs remain available on each paper page.</div>
+  <p class="lead" style="margin:10px 0 18px">Answer BECE-style questions from every subject, see the working immediately, and keep your best score on this device. No account and no network calls.</p>
+  <div class="notice" style="margin-bottom:18px">These are original practice questions written for this demo, not official WAEC question papers. The archived Mathematics PDFs remain available on each paper page.</div>
   <form class="card quiz-controls" data-practice-controls>
-    <div class="grid grid-4">
+    <div class="grid grid-5">
+      <div class="field"><label for="practice-subject">Subject</label><select id="practice-subject" data-practice-subject><option value="">All subjects</option>{subjects}</select></div>
       <div class="field"><label for="practice-year">Year</label><select id="practice-year" data-practice-year><option value="">All years</option>{years}</select></div>
       <div class="field"><label for="practice-paper">Paper</label><select id="practice-paper" data-practice-paper><option value="">All papers</option><option value="1">Paper 1 · Objective</option><option value="2">Paper 2 · Essay</option></select></div>
       <div class="field"><label for="practice-topic">Topic</label><select id="practice-topic" data-practice-topic><option value="">All topics</option>{topics}</select></div>
@@ -334,10 +430,11 @@ def build() -> None:
         "(typeof globalThis !== 'undefined' ? globalThis : this, function () { return "
         + json.dumps(questions, ensure_ascii=False) + "; });\n"
     )
-    render("index.html", "Home", home(data))
-    render("bece/index.html", "BECE", bece_hub(data), "bece")
-    render("bece/mathematics.html", "BECE Mathematics", maths_page(data), "bece")
-    render("bece/topics/index.html", "Topics", topics_index(data), "topics")
+    render("index.html", "Home", home(data, questions))
+    render("bece/index.html", "BECE", bece_hub(data, questions), "bece")
+    for s in data["subjects"]:
+        render(f'bece/{s["slug"]}.html', f'BECE {s["name"]}', subject_page(s, data, questions), "bece")
+    render("bece/topics/index.html", "Topics", topics_index(data, questions), "topics")
     for t in data["topics"]:
         render(f'bece/topics/{t["slug"]}.html', t["name"], topic_page(t, data, questions), "topics")
     for y in data["years"]:
@@ -385,11 +482,17 @@ def build() -> None:
         f'<a class="hidden" data-searchable href="bece/papers/{y["year"]}/paper-{p["no"]}.html" data-kind="paper">{y["year"]} Mathematics {esc(p["label"])}</a>'
         for y in data["years"] for p in y["papers"]
     ) + "".join(
-        f'<a class="hidden" data-searchable href="bece/topics/{t["slug"]}.html" data-kind="topic">{esc(t["name"])}</a>'
+        f'<a class="hidden" data-searchable href="bece/{s["slug"]}.html" data-kind="subject">{esc(s["name"])}</a>'
+        for s in data["subjects"]
+    ) + "".join(
+        f'<a class="hidden" data-searchable href="bece/topics/{t["slug"]}.html" data-kind="topic">{esc(t["name"])} · {esc(t["subject"].replace("-", " "))}</a>'
         for t in data["topics"]
     ) + "".join(
-        f'<a class="hidden" data-searchable href="practice.html?year={q["year"]}&amp;topic={q["topic"]}" '
-        f'data-kind="practice question">{q["year"]} · {esc(q["topic"].replace("-", " "))} · {esc(q["prompt"])}</a>'
+        (lambda haystack: (
+          f'<a class="hidden" data-searchable="{esc(haystack)}" href="practice.html?subject={q["subject"]}&amp;year={q["year"]}&amp;topic={q["topic"]}" '
+          f'data-kind="practice question">'
+          f'{esc(q["subject"].replace("-", " "))} · {q["year"]} · {esc(q["topic"].replace("-", " "))} · {esc(q["prompt"])}</a>'
+        ))(" ".join([q["subject"].replace("-", " "), q["topic"].replace("-", " "), q["prompt"], *q["options"]]))
         for q in questions
     )
     render("search.html", "Search", f'''<section class="section"><div class="wrap">

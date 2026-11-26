@@ -556,46 +556,778 @@
       ]
     }
   ],
+  "subjects": [
+    {
+      "slug": "mathematics",
+      "name": "Mathematics",
+      "topics": [
+        {
+          "slug": "number-bases",
+          "name": "Number bases",
+          "subject": "mathematics"
+        },
+        {
+          "slug": "fractions-decimals",
+          "name": "Fractions and decimals",
+          "subject": "mathematics"
+        },
+        {
+          "slug": "indices",
+          "name": "Indices and standard form",
+          "subject": "mathematics"
+        },
+        {
+          "slug": "algebra",
+          "name": "Algebra",
+          "subject": "mathematics"
+        },
+        {
+          "slug": "equations",
+          "name": "Equations and inequalities",
+          "subject": "mathematics"
+        },
+        {
+          "slug": "geometry",
+          "name": "Geometry",
+          "subject": "mathematics"
+        },
+        {
+          "slug": "mensuration",
+          "name": "Mensuration",
+          "subject": "mathematics"
+        },
+        {
+          "slug": "trigonometry",
+          "name": "Trigonometry",
+          "subject": "mathematics"
+        },
+        {
+          "slug": "statistics",
+          "name": "Statistics and probability",
+          "subject": "mathematics"
+        },
+        {
+          "slug": "sets",
+          "name": "Sets",
+          "subject": "mathematics"
+        }
+      ]
+    },
+    {
+      "slug": "english",
+      "name": "English Language",
+      "topics": [
+        {
+          "slug": "eng-comprehension",
+          "name": "Comprehension",
+          "subject": "english"
+        },
+        {
+          "slug": "eng-vocabulary",
+          "name": "Vocabulary",
+          "subject": "english"
+        },
+        {
+          "slug": "eng-grammar",
+          "name": "Grammar and structure",
+          "subject": "english"
+        },
+        {
+          "slug": "eng-spelling",
+          "name": "Spelling and dictation",
+          "subject": "english"
+        },
+        {
+          "slug": "eng-summary",
+          "name": "Summary writing",
+          "subject": "english"
+        },
+        {
+          "slug": "eng-composition",
+          "name": "Composition",
+          "subject": "english"
+        },
+        {
+          "slug": "eng-oral",
+          "name": "Oral English",
+          "subject": "english"
+        }
+      ]
+    },
+    {
+      "slug": "integrated-science",
+      "name": "Integrated Science",
+      "topics": [
+        {
+          "slug": "sci-matter",
+          "name": "Matter",
+          "subject": "integrated-science"
+        },
+        {
+          "slug": "sci-energy",
+          "name": "Energy",
+          "subject": "integrated-science"
+        },
+        {
+          "slug": "sci-living-things",
+          "name": "Living things",
+          "subject": "integrated-science"
+        },
+        {
+          "slug": "sci-environment",
+          "name": "Environment",
+          "subject": "integrated-science"
+        },
+        {
+          "slug": "sci-health",
+          "name": "Health and safety",
+          "subject": "integrated-science"
+        },
+        {
+          "slug": "sci-electricity",
+          "name": "Electricity",
+          "subject": "integrated-science"
+        },
+        {
+          "slug": "sci-forces",
+          "name": "Forces and machines",
+          "subject": "integrated-science"
+        },
+        {
+          "slug": "sci-chemical-changes",
+          "name": "Chemical changes",
+          "subject": "integrated-science"
+        }
+      ]
+    },
+    {
+      "slug": "social-studies",
+      "name": "Social Studies",
+      "topics": [
+        {
+          "slug": "sst-citizenship",
+          "name": "Citizenship",
+          "subject": "social-studies"
+        },
+        {
+          "slug": "sst-physical-environment",
+          "name": "Physical environment",
+          "subject": "social-studies"
+        },
+        {
+          "slug": "sst-human-environment",
+          "name": "Human environment",
+          "subject": "social-studies"
+        },
+        {
+          "slug": "sst-history-of-ghana",
+          "name": "History of Ghana",
+          "subject": "social-studies"
+        },
+        {
+          "slug": "sst-government",
+          "name": "Government",
+          "subject": "social-studies"
+        },
+        {
+          "slug": "sst-economics",
+          "name": "Economics",
+          "subject": "social-studies"
+        },
+        {
+          "slug": "sst-social-issues",
+          "name": "Social issues",
+          "subject": "social-studies"
+        }
+      ]
+    },
+    {
+      "slug": "rme",
+      "name": "Religious & Moral Education",
+      "topics": [
+        {
+          "slug": "rme-christianity",
+          "name": "Christianity",
+          "subject": "rme"
+        },
+        {
+          "slug": "rme-islam",
+          "name": "Islam",
+          "subject": "rme"
+        },
+        {
+          "slug": "rme-traditional-religion",
+          "name": "Traditional religion",
+          "subject": "rme"
+        },
+        {
+          "slug": "rme-moral-values",
+          "name": "Moral values",
+          "subject": "rme"
+        },
+        {
+          "slug": "rme-worship",
+          "name": "Worship",
+          "subject": "rme"
+        },
+        {
+          "slug": "rme-festivals",
+          "name": "Religious festivals",
+          "subject": "rme"
+        }
+      ]
+    },
+    {
+      "slug": "bdt",
+      "name": "Basic Design & Technology",
+      "topics": [
+        {
+          "slug": "bdt-woodwork",
+          "name": "Woodwork",
+          "subject": "bdt"
+        },
+        {
+          "slug": "bdt-metalwork",
+          "name": "Metalwork",
+          "subject": "bdt"
+        },
+        {
+          "slug": "bdt-technical-drawing",
+          "name": "Technical drawing",
+          "subject": "bdt"
+        },
+        {
+          "slug": "bdt-electronics",
+          "name": "Electronics",
+          "subject": "bdt"
+        },
+        {
+          "slug": "bdt-design",
+          "name": "Design and graphics",
+          "subject": "bdt"
+        },
+        {
+          "slug": "bdt-tools-safety",
+          "name": "Tools and safety",
+          "subject": "bdt"
+        }
+      ]
+    },
+    {
+      "slug": "home-economics",
+      "name": "Home Economics",
+      "topics": [
+        {
+          "slug": "home-food-and-nutrition",
+          "name": "Food and nutrition",
+          "subject": "home-economics"
+        },
+        {
+          "slug": "home-clothing-and-textiles",
+          "name": "Clothing and textiles",
+          "subject": "home-economics"
+        },
+        {
+          "slug": "home-management",
+          "name": "Home management",
+          "subject": "home-economics"
+        },
+        {
+          "slug": "home-child-care",
+          "name": "Child care",
+          "subject": "home-economics"
+        },
+        {
+          "slug": "home-hygiene",
+          "name": "Hygiene and sanitation",
+          "subject": "home-economics"
+        },
+        {
+          "slug": "home-cooking",
+          "name": "Cooking and baking",
+          "subject": "home-economics"
+        }
+      ]
+    },
+    {
+      "slug": "ghanaian-language",
+      "name": "Ghanaian Language & Culture",
+      "topics": [
+        {
+          "slug": "ghc-proverbs",
+          "name": "Proverbs",
+          "subject": "ghanaian-language"
+        },
+        {
+          "slug": "ghc-idioms",
+          "name": "Idioms",
+          "subject": "ghanaian-language"
+        },
+        {
+          "slug": "ghc-folktales",
+          "name": "Folktales",
+          "subject": "ghanaian-language"
+        },
+        {
+          "slug": "ghc-grammar",
+          "name": "Grammar",
+          "subject": "ghanaian-language"
+        },
+        {
+          "slug": "ghc-comprehension",
+          "name": "Comprehension",
+          "subject": "ghanaian-language"
+        },
+        {
+          "slug": "ghc-cultural-values",
+          "name": "Cultural values",
+          "subject": "ghanaian-language"
+        },
+        {
+          "slug": "ghc-translation",
+          "name": "Translation",
+          "subject": "ghanaian-language"
+        }
+      ]
+    },
+    {
+      "slug": "french",
+      "name": "French",
+      "topics": [
+        {
+          "slug": "fre-greetings",
+          "name": "Greetings",
+          "subject": "french"
+        },
+        {
+          "slug": "fre-numbers",
+          "name": "Numbers",
+          "subject": "french"
+        },
+        {
+          "slug": "fre-colours",
+          "name": "Colours",
+          "subject": "french"
+        },
+        {
+          "slug": "fre-family",
+          "name": "Family",
+          "subject": "french"
+        },
+        {
+          "slug": "fre-school",
+          "name": "School",
+          "subject": "french"
+        },
+        {
+          "slug": "fre-verbs",
+          "name": "Verbs",
+          "subject": "french"
+        },
+        {
+          "slug": "fre-questions",
+          "name": "Asking questions",
+          "subject": "french"
+        }
+      ]
+    },
+    {
+      "slug": "ict",
+      "name": "ICT & Computing",
+      "topics": [
+        {
+          "slug": "ict-basics",
+          "name": "Computer basics",
+          "subject": "ict"
+        },
+        {
+          "slug": "ict-hardware",
+          "name": "Hardware",
+          "subject": "ict"
+        },
+        {
+          "slug": "ict-software",
+          "name": "Software",
+          "subject": "ict"
+        },
+        {
+          "slug": "ict-internet-safety",
+          "name": "Internet safety",
+          "subject": "ict"
+        },
+        {
+          "slug": "ict-word-processing",
+          "name": "Word processing",
+          "subject": "ict"
+        },
+        {
+          "slug": "ict-spreadsheets",
+          "name": "Spreadsheets",
+          "subject": "ict"
+        },
+        {
+          "slug": "ict-programming",
+          "name": "Programming basics",
+          "subject": "ict"
+        }
+      ]
+    }
+  ],
   "topics": [
     {
       "slug": "number-bases",
-      "name": "Number bases"
+      "name": "Number bases",
+      "subject": "mathematics"
     },
     {
       "slug": "fractions-decimals",
-      "name": "Fractions and decimals"
+      "name": "Fractions and decimals",
+      "subject": "mathematics"
     },
     {
       "slug": "indices",
-      "name": "Indices and standard form"
+      "name": "Indices and standard form",
+      "subject": "mathematics"
     },
     {
       "slug": "algebra",
-      "name": "Algebra"
+      "name": "Algebra",
+      "subject": "mathematics"
     },
     {
       "slug": "equations",
-      "name": "Equations and inequalities"
+      "name": "Equations and inequalities",
+      "subject": "mathematics"
     },
     {
       "slug": "geometry",
-      "name": "Geometry"
+      "name": "Geometry",
+      "subject": "mathematics"
     },
     {
       "slug": "mensuration",
-      "name": "Mensuration"
+      "name": "Mensuration",
+      "subject": "mathematics"
     },
     {
       "slug": "trigonometry",
-      "name": "Trigonometry"
+      "name": "Trigonometry",
+      "subject": "mathematics"
     },
     {
       "slug": "statistics",
-      "name": "Statistics and probability"
+      "name": "Statistics and probability",
+      "subject": "mathematics"
     },
     {
       "slug": "sets",
-      "name": "Sets"
+      "name": "Sets",
+      "subject": "mathematics"
+    },
+    {
+      "slug": "eng-comprehension",
+      "name": "Comprehension",
+      "subject": "english"
+    },
+    {
+      "slug": "eng-vocabulary",
+      "name": "Vocabulary",
+      "subject": "english"
+    },
+    {
+      "slug": "eng-grammar",
+      "name": "Grammar and structure",
+      "subject": "english"
+    },
+    {
+      "slug": "eng-spelling",
+      "name": "Spelling and dictation",
+      "subject": "english"
+    },
+    {
+      "slug": "eng-summary",
+      "name": "Summary writing",
+      "subject": "english"
+    },
+    {
+      "slug": "eng-composition",
+      "name": "Composition",
+      "subject": "english"
+    },
+    {
+      "slug": "eng-oral",
+      "name": "Oral English",
+      "subject": "english"
+    },
+    {
+      "slug": "sci-matter",
+      "name": "Matter",
+      "subject": "integrated-science"
+    },
+    {
+      "slug": "sci-energy",
+      "name": "Energy",
+      "subject": "integrated-science"
+    },
+    {
+      "slug": "sci-living-things",
+      "name": "Living things",
+      "subject": "integrated-science"
+    },
+    {
+      "slug": "sci-environment",
+      "name": "Environment",
+      "subject": "integrated-science"
+    },
+    {
+      "slug": "sci-health",
+      "name": "Health and safety",
+      "subject": "integrated-science"
+    },
+    {
+      "slug": "sci-electricity",
+      "name": "Electricity",
+      "subject": "integrated-science"
+    },
+    {
+      "slug": "sci-forces",
+      "name": "Forces and machines",
+      "subject": "integrated-science"
+    },
+    {
+      "slug": "sci-chemical-changes",
+      "name": "Chemical changes",
+      "subject": "integrated-science"
+    },
+    {
+      "slug": "sst-citizenship",
+      "name": "Citizenship",
+      "subject": "social-studies"
+    },
+    {
+      "slug": "sst-physical-environment",
+      "name": "Physical environment",
+      "subject": "social-studies"
+    },
+    {
+      "slug": "sst-human-environment",
+      "name": "Human environment",
+      "subject": "social-studies"
+    },
+    {
+      "slug": "sst-history-of-ghana",
+      "name": "History of Ghana",
+      "subject": "social-studies"
+    },
+    {
+      "slug": "sst-government",
+      "name": "Government",
+      "subject": "social-studies"
+    },
+    {
+      "slug": "sst-economics",
+      "name": "Economics",
+      "subject": "social-studies"
+    },
+    {
+      "slug": "sst-social-issues",
+      "name": "Social issues",
+      "subject": "social-studies"
+    },
+    {
+      "slug": "rme-christianity",
+      "name": "Christianity",
+      "subject": "rme"
+    },
+    {
+      "slug": "rme-islam",
+      "name": "Islam",
+      "subject": "rme"
+    },
+    {
+      "slug": "rme-traditional-religion",
+      "name": "Traditional religion",
+      "subject": "rme"
+    },
+    {
+      "slug": "rme-moral-values",
+      "name": "Moral values",
+      "subject": "rme"
+    },
+    {
+      "slug": "rme-worship",
+      "name": "Worship",
+      "subject": "rme"
+    },
+    {
+      "slug": "rme-festivals",
+      "name": "Religious festivals",
+      "subject": "rme"
+    },
+    {
+      "slug": "bdt-woodwork",
+      "name": "Woodwork",
+      "subject": "bdt"
+    },
+    {
+      "slug": "bdt-metalwork",
+      "name": "Metalwork",
+      "subject": "bdt"
+    },
+    {
+      "slug": "bdt-technical-drawing",
+      "name": "Technical drawing",
+      "subject": "bdt"
+    },
+    {
+      "slug": "bdt-electronics",
+      "name": "Electronics",
+      "subject": "bdt"
+    },
+    {
+      "slug": "bdt-design",
+      "name": "Design and graphics",
+      "subject": "bdt"
+    },
+    {
+      "slug": "bdt-tools-safety",
+      "name": "Tools and safety",
+      "subject": "bdt"
+    },
+    {
+      "slug": "home-food-and-nutrition",
+      "name": "Food and nutrition",
+      "subject": "home-economics"
+    },
+    {
+      "slug": "home-clothing-and-textiles",
+      "name": "Clothing and textiles",
+      "subject": "home-economics"
+    },
+    {
+      "slug": "home-management",
+      "name": "Home management",
+      "subject": "home-economics"
+    },
+    {
+      "slug": "home-child-care",
+      "name": "Child care",
+      "subject": "home-economics"
+    },
+    {
+      "slug": "home-hygiene",
+      "name": "Hygiene and sanitation",
+      "subject": "home-economics"
+    },
+    {
+      "slug": "home-cooking",
+      "name": "Cooking and baking",
+      "subject": "home-economics"
+    },
+    {
+      "slug": "ghc-proverbs",
+      "name": "Proverbs",
+      "subject": "ghanaian-language"
+    },
+    {
+      "slug": "ghc-idioms",
+      "name": "Idioms",
+      "subject": "ghanaian-language"
+    },
+    {
+      "slug": "ghc-folktales",
+      "name": "Folktales",
+      "subject": "ghanaian-language"
+    },
+    {
+      "slug": "ghc-grammar",
+      "name": "Grammar",
+      "subject": "ghanaian-language"
+    },
+    {
+      "slug": "ghc-comprehension",
+      "name": "Comprehension",
+      "subject": "ghanaian-language"
+    },
+    {
+      "slug": "ghc-cultural-values",
+      "name": "Cultural values",
+      "subject": "ghanaian-language"
+    },
+    {
+      "slug": "ghc-translation",
+      "name": "Translation",
+      "subject": "ghanaian-language"
+    },
+    {
+      "slug": "fre-greetings",
+      "name": "Greetings",
+      "subject": "french"
+    },
+    {
+      "slug": "fre-numbers",
+      "name": "Numbers",
+      "subject": "french"
+    },
+    {
+      "slug": "fre-colours",
+      "name": "Colours",
+      "subject": "french"
+    },
+    {
+      "slug": "fre-family",
+      "name": "Family",
+      "subject": "french"
+    },
+    {
+      "slug": "fre-school",
+      "name": "School",
+      "subject": "french"
+    },
+    {
+      "slug": "fre-verbs",
+      "name": "Verbs",
+      "subject": "french"
+    },
+    {
+      "slug": "fre-questions",
+      "name": "Asking questions",
+      "subject": "french"
+    },
+    {
+      "slug": "ict-basics",
+      "name": "Computer basics",
+      "subject": "ict"
+    },
+    {
+      "slug": "ict-hardware",
+      "name": "Hardware",
+      "subject": "ict"
+    },
+    {
+      "slug": "ict-software",
+      "name": "Software",
+      "subject": "ict"
+    },
+    {
+      "slug": "ict-internet-safety",
+      "name": "Internet safety",
+      "subject": "ict"
+    },
+    {
+      "slug": "ict-word-processing",
+      "name": "Word processing",
+      "subject": "ict"
+    },
+    {
+      "slug": "ict-spreadsheets",
+      "name": "Spreadsheets",
+      "subject": "ict"
+    },
+    {
+      "slug": "ict-programming",
+      "name": "Programming basics",
+      "subject": "ict"
     }
   ],
   "questions": [
