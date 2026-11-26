@@ -2,6 +2,7 @@
 (() => {
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const esc = s => String(s).replace(/[&<>\"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   /* Theme: pre-paint script in <head> applies the stored class; this keeps UI in sync. */
   const syncThemeButton = () => {
@@ -40,6 +41,23 @@
   document.addEventListener('DOMContentLoaded', () => {
     const quiz = $('[data-quiz]');
     if (!quiz) return;
+    /* Question of the day rotates from the bank, keyed to the UTC date. */
+    if (quiz.hasAttribute('data-qotd') && window.QUESTION_BANK && QuizCore.dailyQuestion) {
+      const q = QuizCore.dailyQuestion(QUESTION_BANK);
+      if (q) {
+        const text = $('.q-text', quiz);
+        if (text) text.textContent = q.prompt;
+        const optionsBox = $('.options', quiz);
+        if (optionsBox) optionsBox.innerHTML = q.options.map((option, i) =>
+          `<button class="option" type="button" data-correct="${i === q.answerIndex}">`
+          + `<span class="letter">${'ABCD'[i]}</span><span>${esc(option)}</span></button>`).join('');
+        const explanation = $('[data-explanation]', quiz);
+        if (explanation) explanation.innerHTML = `<strong>Working:</strong> ${esc(q.explanation)}`;
+        const meta = $('.q-head .muted', quiz);
+        if (meta) meta.textContent = `${q.year} · ${q.topic.replace(/-/g, ' ')} · new question daily`;
+        delete quiz.dataset.done;
+      }
+    }
     const options = $$('[data-correct]', quiz);
     const verdict = $('[data-verdict]', quiz);
     const explanation = $('[data-explanation]', quiz);
@@ -104,6 +122,8 @@
         ? `<ul class="list">${hits.slice(0, 30).map(a => `<li><a href="${a.getAttribute('href')}">${a.textContent.trim()}</a><span class="muted small">${a.dataset.kind || ''}</span></li>`).join('')}</ul>`
         : '<p class="muted">No matches in this offline demo.</p>';
     };
+    const qParam = new URLSearchParams(location.search).get('q');
+    if (qParam && input) input.value = qParam;
     form.addEventListener('submit', e => { e.preventDefault(); render(); });
     input?.addEventListener('input', render);
     render();
@@ -121,22 +141,47 @@
       setTimeout(() => toast.remove(), 2600);
     });
   });
+  /* Leaderboard: surface scores this device actually saved, alongside the demo rows. */
+  document.addEventListener('DOMContentLoaded', () => {
+    const box = $('[data-local-bests]');
+    if (!box) return;
+    const entries = [];
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (!key || !key.startsWith('emmaus:best:')) continue;
+        const score = Number(localStorage.getItem(key));
+        if (!Number.isFinite(score)) continue;
+        const [year, paper, topic] = key.slice('emmaus:best:'.length).split(':');
+        const label = `${year === 'all' ? 'All years' : year} · ${paper === 'all' ? 'All papers' : `Paper ${paper}`}${topic ? ` · ${topic.replace(/-/g, ' ')}` : ''}`;
+        entries.push({ label, score });
+      }
+    } catch (_) {}
+    entries.sort((a, b) => b.score - a.score);
+    box.innerHTML = entries.length
+      ? `<div class="table-wrap"><table><thead><tr><th>Set</th><th>Best</th></tr></thead><tbody>${entries.map(e =>
+          `<tr><td>${esc(e.label)}</td><td><strong>${e.score}%</strong></td></tr>`).join('')}</tbody></table></div>`
+        : '<p class="muted">No scores saved yet. <a href="practice.html">Answer a practice set</a> and your best will appear here.</p>';
+  });
+
   /* Practice runner: filter, answer, explain, score, retry. */
   document.addEventListener('DOMContentLoaded', () => {
     const runner = $('[data-quiz-runner]');
     if (!runner || !window.QuizCore || !window.QUESTION_BANK) return;
     const form = $('[data-practice-controls]');
     const yearSel = $('[data-practice-year]');
+    const paperSel = $('[data-practice-paper]');
     const topicSel = $('[data-practice-topic]');
     const countSel = $('[data-practice-count]');
-    const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     const params = new URLSearchParams(location.search);
     if (params.get('year')) yearSel.value = params.get('year');
+    if (params.get('paper') && paperSel) paperSel.value = params.get('paper');
     if (params.get('topic')) topicSel.value = params.get('topic');
     let state = null;
 
     const filters = () => ({
       year: yearSel.value,
+      paper: paperSel?.value || '',
       topic: topicSel.value,
       limit: Number(countSel.value) || 0,
     });
@@ -195,7 +240,7 @@
 
     function finish() {
       const result = QuizCore.gradeAttempt(state.questions, state.answers);
-      const key = QuizCore.quizKey(params.get('year') || 'all', params.get('paper') || 'all');
+      const key = QuizCore.quizKey(yearSel.value || 'all', paperSel?.value || 'all', topicSel.value || '');
       let best = result.percentage;
       try {
         const stored = Number(localStorage.getItem(key));
@@ -222,6 +267,6 @@
       if (e.target.closest('[data-practice-next]')) { state.index++; state.locked = false; render(); }
       if (e.target.closest('[data-practice-retry]')) start();
     });
-    if (params.get('year') || params.get('topic')) start();
+    if (params.get('year') || params.get('paper') || params.get('topic')) start();
   });
 })();

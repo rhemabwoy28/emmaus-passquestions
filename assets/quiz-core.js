@@ -18,6 +18,10 @@
     if (filters.topic) {
       out = out.filter(q => q.topic === filters.topic);
     }
+    if (filters.paper != null && filters.paper !== '') {
+      const paper = Number(filters.paper);
+      out = out.filter(q => Number(q.paper) === paper);
+    }
     if (filters.limit) {
       out = out.slice(0, Number(filters.limit));
     }
@@ -36,9 +40,16 @@
     return { total, correct, percentage: total ? Math.round((correct / total) * 100) : 0, details };
   }
 
-  function quizKey(year, paper) {
-    return `emmaus:best:${year}:${paper}`;
+  function quizKey(year, paper, topic) {
+    const base = `emmaus:best:${year}:${paper}`;
+    return topic ? `${base}:${topic}` : base;
   }
 
-  return { scoreAnswer, selectQuestions, gradeAttempt, quizKey };
+  function dailyQuestion(bank, date) {
+    if (!bank || !bank.length) return null;
+    const day = Math.floor((date ? date.getTime() : Date.now()) / 86400000);
+    return bank[((day % bank.length) + bank.length) % bank.length];
+  }
+
+  return { scoreAnswer, selectQuestions, gradeAttempt, quizKey, dailyQuestion };
 });

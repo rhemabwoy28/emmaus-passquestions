@@ -88,7 +88,7 @@ def qotd(data: dict) -> str:
     return f'''
 <section class="section" id="question-of-the-day">
   <div class="wrap">
-    <div class="q-card" data-quiz>
+    <div class="q-card" data-quiz data-qotd>
       <div class="q-head"><span class="pill"><span class="pill-dot"></span> Question of the day</span><span class="muted small">BECE Mathematics · offline demo</span></div>
       <div class="q-text">{esc(q['prompt'])}</div>
       <div class="options">{opts}</div>
@@ -251,17 +251,28 @@ def topics_index(data: dict) -> str:
     return f'<section class="section"><div class="wrap"><h1>BECE Mathematics topics</h1><p class="lead" style="margin:10px 0 20px">Pick a topic and work through questions from past papers.</p><div class="grid grid-3">{cards}</div></div></section>'
 
 
-def topic_page(t: dict, data: dict) -> str:
+def topic_page(t: dict, data: dict, questions: list) -> str:
+    topic_questions = [q for q in questions if q["topic"] == t["slug"]]
     rows = "".join(
         f'<li><a href="../papers/{y["year"]}/paper-1.html">{y["year"]} Paper 1</a><span class="muted small">PDF</span></li>'
         for y in data["years"][-10:]
     )
+    samples = "".join(
+        f'<li><span>{esc(q["prompt"])}</span><span class="muted small">'
+        f'<a href="../../practice.html?topic={t["slug"]}&amp;year={q["year"]}">Answer →</a></span></li>'
+        for q in topic_questions[:6]
+    )
     return f'''<section class="section"><div class="wrap">
   <p class="small"><a href="index.html">Topics</a> / {esc(t['name'])}</p>
   <h1 style="margin:10px 0">{esc(t['name'])}</h1>
-  <p class="lead">A practice path for {esc(t['name']).lower()} using BECE Mathematics papers.</p>
-  <div class="notice" style="margin:18px 0">This is a static demo. Topic filtering and answer tracking will be added with the interactive build.</div>
-  <h2>Related papers</h2><ul class="list">{rows}</ul>
+  <p class="lead">Practise {esc(t['name']).lower()} with BECE-style questions and see the working for every answer.</p>
+  <div class="card" style="margin:18px 0">
+    <h3>{len(topic_questions)} practice question{'s' if len(topic_questions) != 1 else ''} available</h3>
+    <p class="small">Timed by you, marked on this device, no account needed.</p>
+    <div class="card-actions"><a class="btn btn-primary btn-sm" href="../../practice.html?topic={t['slug']}">Practise {esc(t['name']).lower()}</a></div>
+  </div>
+  {'<h2>Sample questions</h2><ul class="list">' + samples + '</ul>' if samples else ''}
+  <h2 style="margin-top:24px">Related papers</h2><ul class="list">{rows}</ul>
 </div></section>'''
 
 
@@ -297,8 +308,9 @@ def practice_page(data: dict) -> str:
   <p class="lead" style="margin:10px 0 18px">Answer sample BECE-style questions, see the working immediately, and keep your best score on this device. No account and no network calls.</p>
   <div class="notice" style="margin-bottom:18px">These are original practice questions written for this demo, not the official paper text. The archived PDFs remain available on each paper page.</div>
   <form class="card quiz-controls" data-practice-controls>
-    <div class="grid grid-3">
+    <div class="grid grid-4">
       <div class="field"><label for="practice-year">Year</label><select id="practice-year" data-practice-year><option value="">All years</option>{years}</select></div>
+      <div class="field"><label for="practice-paper">Paper</label><select id="practice-paper" data-practice-paper><option value="">All papers</option><option value="1">Paper 1 · Objective</option><option value="2">Paper 2 · Essay</option></select></div>
       <div class="field"><label for="practice-topic">Topic</label><select id="practice-topic" data-practice-topic><option value="">All topics</option>{topics}</select></div>
       <div class="field"><label for="practice-count">Questions</label><select id="practice-count" data-practice-count><option value="5">5</option><option value="10" selected>10</option><option value="0">All</option></select></div>
     </div>
@@ -327,7 +339,7 @@ def build() -> None:
     render("bece/mathematics.html", "BECE Mathematics", maths_page(data), "bece")
     render("bece/topics/index.html", "Topics", topics_index(data), "topics")
     for t in data["topics"]:
-        render(f'bece/topics/{t["slug"]}.html', t["name"], topic_page(t, data), "topics")
+        render(f'bece/topics/{t["slug"]}.html', t["name"], topic_page(t, data, questions), "topics")
     for y in data["years"]:
         for p in y["papers"]:
             prefix = "../../../"
@@ -353,10 +365,11 @@ def build() -> None:
 <div class="card"><h3>BECE Mathematics archive</h3><p class="small">1990–2026, merged into one PDF, plus verified 2024 and 2025 papers.</p><div class="card-actions"><a class="btn btn-primary btn-sm" href="papers/BECE_Mathematics_1990-2026_MERGED.pdf">Open merged PDF</a></div></div>
 <div class="notice" style="margin-top:18px">No app, no install, no data needed after download.</div>'''))
     render("leaderboard.html", "Leaderboard", simple("Leaderboard", '''
-<p class="lead">A bit of friendly competition helps some students keep going. These rows are demo data, not real users.</p>
+<p class="lead">A bit of friendly competition helps some students keep going. These demo rows are placeholders — your own best scores below are saved only on this device.</p>
 <div class="table-wrap"><table><thead><tr><th>Rank</th><th>Student</th><th>Points</th></tr></thead><tbody>
 <tr><td>1</td><td>Demo Learner A</td><td>815</td></tr><tr><td>2</td><td>Demo Learner B</td><td>380</td></tr><tr><td>3</td><td>Demo Learner C</td><td>343</td></tr>
-</tbody></table></div>'''), "leaderboard")
+</tbody></table></div>
+<div style="margin-top:24px" data-local-bests><h2>Your best scores</h2><p class="muted">Loading scores saved on this device…</p></div>'''), "leaderboard")
     render("sign-in.html", "Sign in", simple("Sign in", '''
 <p class="lead">Accounts are not enabled in this static build. This page is here to match the reference layout.</p>
 <form class="card auth-card" data-demo-form>
@@ -371,12 +384,19 @@ def build() -> None:
     ) + "".join(
         f'<a class="hidden" data-searchable href="bece/topics/{t["slug"]}.html" data-kind="topic">{esc(t["name"])}</a>'
         for t in data["topics"]
+    ) + "".join(
+        f'<a class="hidden" data-searchable href="practice.html?year={q["year"]}&amp;topic={q["topic"]}" '
+        f'data-kind="practice question">{q["year"]} · {esc(q["topic"].replace("-", " "))} · {esc(q["prompt"])}</a>'
+        for q in questions
     )
     render("search.html", "Search", f'''<section class="section"><div class="wrap">
-<h1>Search</h1><p class="lead" style="margin:10px 0">Search the offline index of papers and topics.</p>
+<h1>Search</h1><p class="lead" style="margin:10px 0">Search papers, topics and practice questions — all offline.</p>
 <form class="card" data-search-form><div class="field"><label for="q">Search past questions, topics and years</label><input id="q" data-search-input type="search" placeholder="e.g. 2025 or statistics"></div><button class="btn btn-primary btn-sm" type="submit">Search</button></form>
 {links}<div data-search-results style="margin-top:20px"><p class="muted">Type a year, topic or paper to search.</p></div>
 </div></section>''')
+    render("404.html", "Page not found", simple("Page not found", '''
+<p class="lead">That page is not in this offline copy. The past papers and practice questions are still here.</p>
+<div class="card-actions"><a class="btn btn-primary btn-sm" href="index.html">Go home</a><a class="btn btn-quiet btn-sm" href="bece/index.html">Browse BECE papers</a><a class="btn btn-quiet btn-sm" href="search.html">Search</a></div>'''))
 
     # Local PDFs: one merged archive plus verified 2024/2025 papers.
     pdfdir = ROOT / "papers"
