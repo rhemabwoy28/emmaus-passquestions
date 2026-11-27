@@ -20,6 +20,7 @@
   <script src="assets/site.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="index.html" aria-label="Emmaus Methodist Pass Questions home">
@@ -33,7 +34,8 @@
         <a href="about.html" >About</a>
       </nav>
       <form class="header-search" action="search.html" method="get" role="search">
-        <input type="search" name="q" placeholder="Search past questions…" aria-label="Search past questions">
+        <label class="sr-only" for="site-search">Search past questions</label>
+        <input id="site-search" type="search" name="q" placeholder="Search past questions…">
       </form>
       <div class="header-actions">
         <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
@@ -54,7 +56,7 @@
     </nav>
   </header>
 
-  <main><section class="section"><div class="wrap">
+  <main id="main"><section class="section"><div class="wrap">
   <h1>Practice questions</h1>
   <p class="lead" style="margin:10px 0 18px">Answer BECE-style questions from every subject, see the working immediately, and keep your best score on this device. No account and no network calls.</p>
   <div class="notice" style="margin-bottom:18px">A mix of original practice questions and BECE English and Social Studies questions compiled from publicly available past papers. This is independent study material, not an official WAEC publication. The archived Mathematics PDFs remain available on each paper page.</div>

@@ -179,8 +179,8 @@ def home(data: dict, questions: list) -> str:
     <h1 style="margin-top:16px">Pass your BECE.<br><span>Free.</span></h1>
     <p class="lead">Practise BECE questions across every subject and topic, check the working, and walk into the exam hall knowing what to expect.</p>
     <div class="hero-actions">
-      <a class="btn btn-wa" href="bece/index.html">Browse all subjects</a>
-      <a class="btn btn-outline" href="practice.html">Start practising</a>
+      <a class="btn btn-primary" href="practice.html">Start practising</a>
+      <a class="btn btn-outline" href="bece/index.html">Browse all subjects</a>
     </div>
     <p class="hero-foot">No payment. No app required. Works on any phone.</p>
     <p style="margin-top:18px"><a class="pill" href="#question-of-the-day"><span class="pill-dot"></span> Question of the day · try one now ↓</a></p>
