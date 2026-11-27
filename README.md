@@ -39,8 +39,9 @@ python3 tools/build_pages.py               # emit all HTML pages
 - Question of the day rotates automatically from the question bank, keyed to the UTC date.
 - Topic pages link straight into filtered practice; practice can filter by subject, year, paper and topic.
 - Search covers papers, subjects, topics, question prompts and answer options, and honours `?q=` links from the header search box.
-- 152 starter questions: every one of the 71 topics has at least two questions, with worked explanations.
+- 1,176 questions: 152 original starters plus 1,024 English Paper 1 questions (1990–2026) extracted from the compiled BECE English book with the published answer keys. Every one of the 71 topics has at least two questions.
 - The leaderboard shows best scores saved on this device alongside the demo rows.
+- The English Paper 1 questions came from a compiled 1990–2026 book; re-extract with `python3 tools/english_pdf/extract.py --pdf <book.pdf> --out <questions.json>` (needs poppler's `pdftotext`). The parser cross-checks each question against the book's answer key and skips passage-dependent items.
 - `papers/` holds the local archive: the 1990–2026 merged BECE Mathematics PDF plus verified 2024/2025 Paper 1 and Paper 2 files.
 - Design spec: `docs/superpowers/specs/2026-11-25-emmaus-static-replica-design.md`
 - Implementation plan: `docs/plans/2026-11-25-emmaus-static-replica.md`

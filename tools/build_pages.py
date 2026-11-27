@@ -401,7 +401,7 @@ def practice_page(data: dict) -> str:
     return f'''<section class="section"><div class="wrap">
   <h1>Practice questions</h1>
   <p class="lead" style="margin:10px 0 18px">Answer BECE-style questions from every subject, see the working immediately, and keep your best score on this device. No account and no network calls.</p>
-  <div class="notice" style="margin-bottom:18px">These are original practice questions written for this demo, not official WAEC question papers. The archived Mathematics PDFs remain available on each paper page.</div>
+  <div class="notice" style="margin-bottom:18px">A mix of original practice questions and BECE English questions compiled from publicly available past papers. This is independent study material, not an official WAEC publication. The archived Mathematics PDFs remain available on each paper page.</div>
   <form class="card quiz-controls" data-practice-controls>
     <div class="grid grid-5">
       <div class="field"><label for="practice-subject">Subject</label><select id="practice-subject" data-practice-subject><option value="">All subjects</option>{subjects}</select></div>
