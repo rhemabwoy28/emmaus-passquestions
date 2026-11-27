@@ -157,7 +157,7 @@ def qotd(data: dict) -> str:
       <div class="verdict hidden" data-verdict></div>
       <div class="explanation hidden" data-explanation><strong>Working:</strong> {esc(q['explanation'])}</div>
       <div class="gate hidden" data-gate>
-        <p class="small">That is the idea: answer a real-style question, see the marking, then go deeper.</p>
+        <p class="small">Answer the question, check the working, then pick a topic to practise.</p>
         <a class="btn btn-primary btn-sm" href="practice.html">Practise the full paper</a>
       </div>
     </div>
@@ -177,7 +177,7 @@ def home(data: dict, questions: list) -> str:
   <div class="wrap">
     <span class="pill"><span class="pill-dot"></span> BECE revision, free on any phone</span>
     <h1 style="margin-top:16px">Pass your BECE.<br><span>Free.</span></h1>
-    <p class="lead">Practise BECE questions across every subject and topic, check the working, and walk into the exam hall knowing what to expect.</p>
+    <p class="lead">BECE papers from 1990 to 2026, plus practice questions for Mathematics, English and Social Studies. Every answer shows the working.</p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="practice.html">Start practising</a>
       <a class="btn btn-outline" href="bece/index.html">Browse all subjects</a>
@@ -190,13 +190,13 @@ def home(data: dict, questions: list) -> str:
 <section class="section" aria-label="How it works">
   <div class="wrap">
     <div class="eyebrow">How it works</div>
-    <h2>From your first question to a full paper</h2>
+    <h2>Try a question. Then work through a paper.</h2>
     <div class="bubbles" style="margin-top:20px">
       <div class="window">
         <div class="window-bar"><span class="dot"></span> Emmaus · chat</div>
         <div class="window-body">
           <div class="bubble in">Hi, I want to revise for BECE Maths</div>
-          <div class="bubble out">Welcome 👋 Pick a year to see the papers we have.</div>
+          <div class="bubble out">Welcome. Pick a year to see the papers we have.</div>
           <div class="bubble in">2025</div>
           <div class="bubble out">Paper 1 and Paper 2 are ready. Open the paper to start.</div>
         </div>
@@ -215,8 +215,8 @@ def home(data: dict, questions: list) -> str:
         <div class="window-body">
           <div class="bubble in">Saved for the trotro ride home</div>
           <div class="bubble out">2024 Mathematics Paper 1 · 40 questions · available offline</div>
-          <div class="bubble in">I finished. What next?</div>
-          <div class="bubble out">Your score is ready. Try a mock under timed conditions.</div>
+          <div class="bubble in">I finished the paper.</div>
+          <div class="bubble out">Your score is saved here. Pick another year to keep going.</div>
         </div>
       </div>
     </div>
@@ -244,17 +244,17 @@ def home(data: dict, questions: list) -> str:
 <section class="section">
   <div class="wrap">
     <div class="eyebrow">Start with one question</div>
-    <h2>Answer a real-style question, then go deeper</h2>
-    <p class="lead" style="margin:10px 0 18px">A new practice question every day. No account and no payment to see the working.</p>
+    <h2>Answer one question, then pick a topic</h2>
+    <p class="lead" style="margin:10px 0 18px">A new question every day, with the working underneath.</p>
     {qotd(data)}
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
-    <h2>Study however you get online</h2>
+    <h2>Revise on your phone or laptop</h2>
     <div class="grid grid-3" style="margin-top:18px">
-      <div class="card"><h3>On your phone</h3><p>Download the papers once, then revise with no data at all — on the trotro, at home, anywhere.</p><div class="card-actions"><a class="btn btn-quiet btn-sm" href="download.html">Get the PDFs</a></div></div>
+      <div class="card"><h3>On your phone</h3><p>Download the papers once. They open offline on the trotro or at home.</p><div class="card-actions"><a class="btn btn-quiet btn-sm" href="download.html">Get the PDFs</a></div></div>
       <div class="card"><h3>On the web</h3><p>Open a year, pick a paper, and work through every question with the marking scheme beside you.</p><div class="card-actions"><a class="btn btn-quiet btn-sm" href="bece/index.html">Browse BECE</a></div></div>
       <div class="card"><h3>By topic</h3><p>Weak in mensuration? Practise that topic across years instead of starting from page one.</p><div class="card-actions"><a class="btn btn-quiet btn-sm" href="bece/topics/index.html">See topics</a></div></div>
     </div>
@@ -263,8 +263,8 @@ def home(data: dict, questions: list) -> str:
 
 <section class="section">
   <div class="wrap center">
-    <h2>Start revising today</h2>
-    <p class="lead" style="margin:10px auto 18px;max-width:620px">Every question you answer shows you something new about what you know. Pick a year and begin.</p>
+    <h2>Pick a paper and begin</h2>
+    <p class="lead" style="margin:10px auto 18px;max-width:620px">Choose a year or topic. Your score stays on this device.</p>
     <a class="btn btn-primary" href="bece/index.html">Explore BECE past papers</a>
   </div>
 </section>'''
@@ -284,9 +284,9 @@ def bece_hub(data: dict, questions: list) -> str:
 <section class="section"><div class="wrap">
   <span class="pill">BECE · Junior High</span>
   <h1 style="margin-top:14px">BECE past questions</h1>
-  <p class="lead" style="margin:10px 0 22px">Practice questions and topics for every BECE subject, plus the Mathematics paper archive by year.</p>
+  <p class="lead" style="margin:10px 0 22px">Topics for every BECE subject, practice questions for Mathematics, English and Social Studies, plus the Mathematics paper archive by year.</p>
   <h2>Subjects</h2><div class="grid grid-3" style="margin:16px 0 28px">{subjects}</div>
-  <div class="card"><h3>Browse topics</h3><p class="small">Algebra, comprehension, integrated science, social studies and more — across all subjects.</p><div class="card-actions"><a class="btn btn-quiet btn-sm" href="topics/index.html">See all topics</a></div></div>
+  <div class="card"><h3>Browse topics</h3><p class="small">Algebra, comprehension, integrated science and social studies are all here.</p><div class="card-actions"><a class="btn btn-quiet btn-sm" href="topics/index.html">See all topics</a></div></div>
   <h2 style="margin-top:28px">Past papers by year</h2>
   <div class="table-wrap"><ul class="list">{rows}</ul></div>
 </div></section>'''
@@ -359,7 +359,7 @@ def topic_page(t: dict, data: dict, questions: list) -> str:
   <p class="lead">Practise {esc(t['name']).lower()} with BECE-style {esc(subject['name'])} questions and see the working for every answer.</p>
   <div class="card" style="margin:18px 0">
     <h3>{len(topic_questions)} practice question{'s' if len(topic_questions) != 1 else ''} available</h3>
-    <p class="small">Timed by you, marked on this device, no account needed.</p>
+    <p class="small">Set your own timer. Answers are marked on this device.</p>
     <div class="card-actions"><a class="btn btn-primary btn-sm" href="../../practice.html?subject={t['subject']}&amp;topic={t['slug']}">Practise {esc(t['name']).lower()}</a></div>
   </div>
   {'<h2>Sample questions</h2><ul class="list">' + samples + '</ul>' if samples else ''}
@@ -371,7 +371,7 @@ def paper_page(year: int, paper: dict, prefix: str) -> str:
     file = paper.get("file")
     if os.environ.get("EMMAUS_PUBLIC"):
         note = "The PDF is kept in the local archive and is not published online."
-        actions = f'<span class="muted small">PDF available locally — not published online.</span>'
+        actions = f'<span class="muted small">PDF available locally. Not published online.</span>'
         rights = "This hosted version publishes only the practice pages; archived PDFs stay local."
     else:
         link = f'{prefix}papers/BECE_Mathematics_1990-2026_MERGED.pdf' if not file else f'{prefix}papers/{quote(file)}'
@@ -400,7 +400,7 @@ def practice_page(data: dict) -> str:
     )
     return f'''<section class="section"><div class="wrap">
   <h1>Practice questions</h1>
-  <p class="lead" style="margin:10px 0 18px">Answer BECE-style questions from every subject, see the working immediately, and keep your best score on this device. No account and no network calls.</p>
+  <p class="lead" style="margin:10px 0 18px">Pick a subject, year or topic. Answers are marked on this device, and your best score stays here.</p>
   <div class="notice" style="margin-bottom:18px">A mix of original practice questions and BECE English and Social Studies questions compiled from publicly available past papers. This is independent study material, not an official WAEC publication. The archived Mathematics PDFs remain available on each paper page.</div>
   <form class="card quiz-controls" data-practice-controls>
     <div class="grid grid-5">
@@ -444,7 +444,7 @@ def build() -> None:
                    f'{y["year"]} {p["label"]}', paper_page(y["year"], p, prefix), "bece")
 
     render("about.html", "About", simple("About Emmaus", '''
-<p class="lead">Emmaus Methodist Pass Questions exists so that a student's preparation depends on effort, not on whether their school has the past papers or their family can afford a bookshop copy.</p>
+<p class="lead">A student should be able to prepare with the papers, whether or not their school has copies or their family can buy a bookshop edition.</p>
 <p>We organise BECE Mathematics papers by year and topic, keep the marking schemes next to the questions, and make everything work on a phone with a little data. There is no payment and no signup needed to browse.</p>
 <div class="card"><h3>Honest limits</h3><p>We are not affiliated with WAEC or GES. Our papers are study copies, not official publications, and we cannot promise a grade.</p></div>'''), "about")
     render("contact.html", "Contact", simple("Contact", '''
@@ -455,7 +455,7 @@ def build() -> None:
 <p>All question papers are stored locally in the site folder. If you publish a version with accounts, you must add a real privacy policy covering name, phone, progress and device data before collecting any of it.</p>'''))
     render("terms.html", "Terms", simple("Terms of service", '''
 <p class="lead">Use the material here for your own study. Do not resell it, bulk-download it or republish it as your own.</p>
-<p>BECE questions originate with WAEC. These files are third-party study reproductions kept in a local archive. Publishing or redistributing them may require permission — check rights before making this site public.</p>
+<p>BECE questions originate with WAEC. These files are third-party study reproductions kept in a local archive. Publishing or redistributing them may require permission. Check rights before making this site public.</p>
 <p>Automated marking, if added later, is a study aid and not an official assessment.</p>'''))
     download_action = ('<span class="muted small">The archive stays local and is not published online.</span>'
                        if os.environ.get("EMMAUS_PUBLIC") else
@@ -463,15 +463,15 @@ def build() -> None:
     render("download.html", "Download", simple("Download the papers", f'''
 <p class="lead">The PDF archive lives in this project folder, so it can be opened offline once the site files are on your device.</p>
 <div class="card"><h3>BECE Mathematics archive</h3><p class="small">1990–2026, merged into one PDF, plus verified 2024 and 2025 papers.</p><div class="card-actions">{download_action}</div></div>
-<div class="notice" style="margin-top:18px">No app, no install, no data needed after download.</div>'''))
+<div class="notice" style="margin-top:18px">Once downloaded, the PDF opens without a connection.</div>'''))
     render("leaderboard.html", "Leaderboard", simple("Leaderboard", '''
-<p class="lead">A bit of friendly competition helps some students keep going. These demo rows are placeholders — your own best scores below are saved only on this device.</p>
+<p class="lead">The table below is a demo. Your own best scores are saved on this device.</p>
 <div class="table-wrap"><table><thead><tr><th>Rank</th><th>Student</th><th>Points</th></tr></thead><tbody>
 <tr><td>1</td><td>Demo Learner A</td><td>815</td></tr><tr><td>2</td><td>Demo Learner B</td><td>380</td></tr><tr><td>3</td><td>Demo Learner C</td><td>343</td></tr>
 </tbody></table></div>
 <div style="margin-top:24px" data-local-bests><h2>Your best scores</h2><p class="muted">Loading scores saved on this device…</p></div>'''), "leaderboard")
     render("sign-in.html", "Sign in", simple("Sign in", '''
-<p class="lead">Accounts are not enabled in this static build. This page is here to match the reference layout.</p>
+<p class="lead">Accounts are not enabled in this demo. The form only shows a notice.</p>
 <form class="card auth-card" data-demo-form>
   <div class="field"><label for="phone">Phone number</label><input id="phone" name="phone" type="tel" placeholder="0XX XXX XXXX"></div>
   <button class="btn btn-primary" type="submit">Continue</button>
@@ -496,7 +496,7 @@ def build() -> None:
         for q in questions
     )
     render("search.html", "Search", f'''<section class="section"><div class="wrap">
-<h1>Search</h1><p class="lead" style="margin:10px 0">Search papers, topics and practice questions — all offline.</p>
+<h1>Search</h1><p class="lead" style="margin:10px 0">Search papers, topics and practice questions offline.</p>
 <form class="card" data-search-form><div class="field"><label for="q">Search past questions, topics and years</label><input id="q" data-search-input type="search" placeholder="e.g. 2025 or statistics"></div><button class="btn btn-primary btn-sm" type="submit">Search</button></form>
 {links}<div data-search-results style="margin-top:20px"><p class="muted">Type a year, topic or paper to search.</p></div>
 </div></section>''')
