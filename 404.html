@@ -20,6 +20,7 @@
   <script src="assets/site.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="index.html" aria-label="Emmaus Methodist Pass Questions home">
@@ -33,7 +34,8 @@
         <a href="about.html" >About</a>
       </nav>
       <form class="header-search" action="search.html" method="get" role="search">
-        <input type="search" name="q" placeholder="Search past questions…" aria-label="Search past questions">
+        <label class="sr-only" for="site-search">Search past questions</label>
+        <input id="site-search" type="search" name="q" placeholder="Search past questions…">
       </form>
       <div class="header-actions">
         <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
@@ -54,7 +56,7 @@
     </nav>
   </header>
 
-  <main><section class="section"><div class="wrap"><h1 style="margin-bottom:14px">Page not found</h1><div class="stack">
+  <main id="main"><section class="section"><div class="wrap"><h1 style="margin-bottom:14px">Page not found</h1><div class="stack">
 <p class="lead">That page is not in this offline copy. The past papers and practice questions are still here.</p>
 <div class="card-actions"><a class="btn btn-primary btn-sm" href="index.html">Go home</a><a class="btn btn-quiet btn-sm" href="bece/index.html">Browse BECE papers</a><a class="btn btn-quiet btn-sm" href="search.html">Search</a></div></div></div></section></main>
 

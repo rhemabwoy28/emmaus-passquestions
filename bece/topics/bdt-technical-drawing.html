@@ -20,6 +20,7 @@
   <script src="../../assets/site.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="../../index.html" aria-label="Emmaus Methodist Pass Questions home">
@@ -33,7 +34,8 @@
         <a href="../../about.html" >About</a>
       </nav>
       <form class="header-search" action="../../search.html" method="get" role="search">
-        <input type="search" name="q" placeholder="Search past questions…" aria-label="Search past questions">
+        <label class="sr-only" for="site-search">Search past questions</label>
+        <input id="site-search" type="search" name="q" placeholder="Search past questions…">
       </form>
       <div class="header-actions">
         <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
@@ -54,7 +56,7 @@
     </nav>
   </header>
 
-  <main><section class="section"><div class="wrap">
+  <main id="main"><section class="section"><div class="wrap">
   <p class="small"><a href="index.html">Topics</a> / <a href="../bdt.html">Basic Design &amp; Technology</a> / Technical drawing</p>
   <h1 style="margin:10px 0">Technical drawing</h1>
   <p class="lead">Practise technical drawing with BECE-style Basic Design &amp; Technology questions and see the working for every answer.</p>

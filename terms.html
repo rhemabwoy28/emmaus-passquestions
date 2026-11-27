@@ -20,6 +20,7 @@
   <script src="assets/site.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="index.html" aria-label="Emmaus Methodist Pass Questions home">
@@ -33,7 +34,8 @@
         <a href="about.html" >About</a>
       </nav>
       <form class="header-search" action="search.html" method="get" role="search">
-        <input type="search" name="q" placeholder="Search past questions…" aria-label="Search past questions">
+        <label class="sr-only" for="site-search">Search past questions</label>
+        <input id="site-search" type="search" name="q" placeholder="Search past questions…">
       </form>
       <div class="header-actions">
         <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
@@ -54,7 +56,7 @@
     </nav>
   </header>
 
-  <main><section class="section"><div class="wrap"><h1 style="margin-bottom:14px">Terms of service</h1><div class="stack">
+  <main id="main"><section class="section"><div class="wrap"><h1 style="margin-bottom:14px">Terms of service</h1><div class="stack">
 <p class="lead">Use the material here for your own study. Do not resell it, bulk-download it or republish it as your own.</p>
 <p>BECE questions originate with WAEC. These files are third-party study reproductions kept in a local archive. Publishing or redistributing them may require permission — check rights before making this site public.</p>
 <p>Automated marking, if added later, is a study aid and not an official assessment.</p></div></div></section></main>
