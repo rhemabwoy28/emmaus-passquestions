@@ -52,7 +52,7 @@
           `<button class="option" type="button" data-correct="${i === q.answerIndex}">`
           + `<span class="letter">${'ABCD'[i]}</span><span>${esc(option)}</span></button>`).join('');
         const explanation = $('[data-explanation]', quiz);
-        if (explanation) explanation.innerHTML = `<strong>Working:</strong> ${esc(q.explanation)}`;
+        if (explanation) explanation.innerHTML = `<strong>Explanation:</strong> ${esc(q.explanation)}`;
         const meta = $('.q-head .muted', quiz);
         if (meta) meta.textContent = `${q.subject.replace(/-/g, ' ')} · ${q.year} · new question daily`;
         delete quiz.dataset.done;
@@ -75,7 +75,7 @@
         o.classList.toggle('dim', !correct && o !== btn);
       });
       if (verdict) {
-        verdict.textContent = right ? 'Correct — well done.' : "Not quite. Here's the working.";
+        verdict.textContent = right ? 'Correct — well done.' : "Not quite. Check the explanation.";
         verdict.classList.remove('hidden');
         quiz.setAttribute('aria-live', 'polite');
       }
@@ -253,10 +253,10 @@
         btn.classList.toggle('dim', n !== q.answerIndex && n !== i);
       });
       const verdict = $('[data-practice-verdict]', runner);
-      verdict.textContent = right ? 'Correct — well done.' : 'Not quite — check the working below.';
+      verdict.textContent = right ? 'Correct — well done.' : 'Not quite — check the explanation below.';
       verdict.classList.remove('hidden');
       const box = $('[data-practice-explanation]', runner);
-      box.innerHTML = `<strong>Working:</strong> ${esc(q.explanation)}`;
+      box.innerHTML = `<strong>Explanation:</strong> ${esc(q.explanation)}`;
       box.classList.remove('hidden');
       $('[data-practice-next]', runner).classList.remove('hidden');
     }
