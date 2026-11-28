@@ -562,6 +562,11 @@
       "name": "Mathematics",
       "topics": [
         {
+          "slug": "numbers",
+          "name": "Numbers and numeration",
+          "subject": "mathematics"
+        },
+        {
           "slug": "number-bases",
           "name": "Number bases",
           "subject": "mathematics"
@@ -974,6 +979,11 @@
     }
   ],
   "topics": [
+    {
+      "slug": "numbers",
+      "name": "Numbers and numeration",
+      "subject": "mathematics"
+    },
     {
       "slug": "number-bases",
       "name": "Number bases",

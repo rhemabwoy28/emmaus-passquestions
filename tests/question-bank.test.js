@@ -50,3 +50,18 @@ test('question years are within the archive range', () => {
     assert.ok(q.year >= 1990 && q.year <= 2026, `${q.id} has invalid year ${q.year}`);
   }
 });
+
+test('mathematics bank covers the archive and every maths topic', () => {
+  const maths = bank.filter(q => q.subject === 'mathematics');
+  assert.ok(maths.length >= 500, `expected a broad maths bank, got ${maths.length}`);
+  const years = new Set(maths.map(q => q.year));
+  // The source bank has no 2002 paper (that year exists only as a separate resit).
+  for (let year = 1990; year <= 2025; year++) {
+    if (year === 2002) continue;
+    assert.ok(years.has(year), `no mathematics question for ${year}`);
+  }
+  const mathsTopics = papers.subjects.find(s => s.slug === 'mathematics').topics;
+  for (const t of mathsTopics) {
+    assert.ok(maths.filter(q => q.topic === t.slug).length >= 3, `thin coverage for ${t.slug}`);
+  }
+});
