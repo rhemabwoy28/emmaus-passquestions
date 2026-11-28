@@ -48,6 +48,8 @@ SUBJECTS = [
         ("bdt-woodwork", "Woodwork"), ("bdt-metalwork", "Metalwork"),
         ("bdt-technical-drawing", "Technical drawing"), ("bdt-electronics", "Electronics"),
         ("bdt-design", "Design and graphics"), ("bdt-tools-safety", "Tools and safety"),
+        ("bdt-enterprise", "Business and entrepreneurship"), ("bdt-materials", "Material properties"),
+        ("bdt-construction", "Building and construction"),
     ]},
     {"slug": "home-economics", "name": "Home Economics", "topics": [
         ("home-food-and-nutrition", "Food and nutrition"),
@@ -59,17 +61,20 @@ SUBJECTS = [
         ("ghc-proverbs", "Proverbs"), ("ghc-idioms", "Idioms"), ("ghc-folktales", "Folktales"),
         ("ghc-grammar", "Grammar"), ("ghc-comprehension", "Comprehension"),
         ("ghc-cultural-values", "Cultural values"), ("ghc-translation", "Translation"),
+        ("ghc-vocabulary", "Vocabulary and word meaning"),
     ]},
     {"slug": "french", "name": "French", "topics": [
         ("fre-greetings", "Greetings"), ("fre-numbers", "Numbers"), ("fre-colours", "Colours"),
         ("fre-family", "Family"), ("fre-school", "School"), ("fre-verbs", "Verbs"),
-        ("fre-questions", "Asking questions"),
+        ("fre-questions", "Asking questions"), ("fre-vocabulary", "Vocabulary and word meaning"),
+        ("fre-grammar", "Grammar"),
     ]},
     {"slug": "ict", "name": "ICT & Computing", "topics": [
         ("ict-basics", "Computer basics"), ("ict-hardware", "Hardware"),
-        ("ict-software", "Software"), ("ict-internet-safety", "Internet safety"),
+        ("ict-software", "Software"), ("ict-internet-safety", "Internet, email and safety"),
         ("ict-word-processing", "Word processing"), ("ict-spreadsheets", "Spreadsheets"),
-        ("ict-programming", "Programming basics"),
+        ("ict-programming", "Programming basics"), ("ict-presentations", "Presentation software"),
+        ("ict-networks", "Computer networks"),
     ]},
 ]
 TOPICS = [t for s in SUBJECTS for t in s["topics"]]
@@ -156,9 +161,9 @@ def qotd(data: dict) -> str:
       <div class="q-text">{esc(q['prompt'])}</div>
       <div class="options">{opts}</div>
       <div class="verdict hidden" data-verdict></div>
-      <div class="explanation hidden" data-explanation><strong>Working:</strong> {esc(q['explanation'])}</div>
+      <div class="explanation hidden" data-explanation><strong>Explanation:</strong> {esc(q['explanation'])}</div>
       <div class="gate hidden" data-gate>
-        <p class="small">Answer the question, check the working, then pick a topic to practise.</p>
+        <p class="small">Answer the question, check the explanation, then pick a topic to practise.</p>
         <a class="btn btn-primary btn-sm" href="practice.html">Practise the full paper</a>
       </div>
     </div>
@@ -178,7 +183,7 @@ def home(data: dict, questions: list) -> str:
   <div class="wrap">
     <span class="pill"><span class="pill-dot"></span> BECE revision, free on any phone</span>
     <h1 style="margin-top:16px">Pass your BECE.<br><span>Free.</span></h1>
-    <p class="lead">BECE papers from 1990 to 2026, plus practice questions for Mathematics, English and Social Studies. Every answer shows the working.</p>
+    <p class="lead">BECE papers from 1990 to 2026, plus practice questions for Mathematics, English and Social Studies. Answers are shown with worked solutions where the source paper has them.</p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="practice.html">Start practising</a>
       <a class="btn btn-outline" href="bece/index.html">Browse all subjects</a>
@@ -208,7 +213,7 @@ def home(data: dict, questions: list) -> str:
           <div class="bubble in">Which topic needs work?</div>
           <div class="bubble out">Statistics and probability · 12 questions</div>
           <div class="bubble in">Show the marking scheme</div>
-          <div class="bubble out">Step-by-step working is under every answer.</div>
+          <div class="bubble out">Every answer is shown under the question.</div>
         </div>
       </div>
       <div class="window">
@@ -246,7 +251,7 @@ def home(data: dict, questions: list) -> str:
   <div class="wrap">
     <div class="eyebrow">Start with one question</div>
     <h2>Answer one question, then pick a topic</h2>
-    <p class="lead" style="margin:10px 0 18px">A new question every day, with the working underneath.</p>
+    <p class="lead" style="margin:10px 0 18px">A new question every day, with the answer underneath.</p>
     {qotd(data)}
   </div>
 </section>
@@ -310,7 +315,7 @@ def subject_page(subject: dict, data: dict, questions: list) -> str:
 <section class="section"><div class="wrap">
   <p class="small"><a href="index.html">BECE</a> / {esc(subject['name'])}</p>
   <h1 style="margin:10px 0">BECE {esc(subject['name'])}</h1>
-  <p class="lead">Original BECE-style practice questions and topics for {esc(subject['name'])}, with working for every answer.</p>
+  <p class="lead">BECE past questions and topics for {esc(subject['name'])}, with the answer for every question.</p>
   <div class="grid grid-3" style="margin:20px 0">
     <div class="stat"><b>{len(subject['topics'])}</b><span class="small">topics</span></div>
     <div class="stat"><b>{len(subject_questions)}</b><span class="small">practice questions</span></div>
@@ -357,7 +362,7 @@ def topic_page(t: dict, data: dict, questions: list) -> str:
     return f'''<section class="section"><div class="wrap">
   <p class="small"><a href="index.html">Topics</a> / <a href="../{t['subject']}.html">{esc(subject['name'])}</a> / {esc(t['name'])}</p>
   <h1 style="margin:10px 0">{esc(t['name'])}</h1>
-  <p class="lead">Practise {esc(t['name']).lower()} with BECE-style {esc(subject['name'])} questions and see the working for every answer.</p>
+  <p class="lead">Practise {esc(t['name']).lower()} with BECE {esc(subject['name'])} questions and check every answer.</p>
   <div class="card" style="margin:18px 0">
     <h3>{len(topic_questions)} practice question{'s' if len(topic_questions) != 1 else ''} available</h3>
     <p class="small">Set your own timer. Answers are marked on this device.</p>
@@ -402,7 +407,7 @@ def practice_page(data: dict) -> str:
     return f'''<section class="section"><div class="wrap">
   <h1>Practice questions</h1>
   <p class="lead" style="margin:10px 0 18px">Pick a subject, year or topic. Answers are marked on this device, and your best score stays here.</p>
-  <div class="notice" style="margin-bottom:18px">A mix of original practice questions and BECE Mathematics, English and Social Studies questions compiled from publicly available past papers. This is independent study material, not an official WAEC publication. The archived Mathematics PDFs remain available on each paper page.</div>
+  <div class="notice" style="margin-bottom:18px">BECE questions compiled from publicly available past papers across the subjects below. Worked solutions are included where the source paper provides them; otherwise the published answer key is shown. This is independent study material, not an official WAEC publication. The archived Mathematics PDFs remain available on each paper page.</div>
   <form class="card quiz-controls" data-practice-controls>
     <div class="grid grid-5">
       <div class="field"><label for="practice-subject">Subject</label><select id="practice-subject" data-practice-subject><option value="">All subjects</option>{subjects}</select></div>

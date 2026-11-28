@@ -815,6 +815,21 @@
           "slug": "bdt-tools-safety",
           "name": "Tools and safety",
           "subject": "bdt"
+        },
+        {
+          "slug": "bdt-enterprise",
+          "name": "Business and entrepreneurship",
+          "subject": "bdt"
+        },
+        {
+          "slug": "bdt-materials",
+          "name": "Material properties",
+          "subject": "bdt"
+        },
+        {
+          "slug": "bdt-construction",
+          "name": "Building and construction",
+          "subject": "bdt"
         }
       ]
     },
@@ -892,6 +907,11 @@
           "slug": "ghc-translation",
           "name": "Translation",
           "subject": "ghanaian-language"
+        },
+        {
+          "slug": "ghc-vocabulary",
+          "name": "Vocabulary and word meaning",
+          "subject": "ghanaian-language"
         }
       ]
     },
@@ -933,6 +953,16 @@
           "slug": "fre-questions",
           "name": "Asking questions",
           "subject": "french"
+        },
+        {
+          "slug": "fre-vocabulary",
+          "name": "Vocabulary and word meaning",
+          "subject": "french"
+        },
+        {
+          "slug": "fre-grammar",
+          "name": "Grammar",
+          "subject": "french"
         }
       ]
     },
@@ -957,7 +987,7 @@
         },
         {
           "slug": "ict-internet-safety",
-          "name": "Internet safety",
+          "name": "Internet, email and safety",
           "subject": "ict"
         },
         {
@@ -973,6 +1003,16 @@
         {
           "slug": "ict-programming",
           "name": "Programming basics",
+          "subject": "ict"
+        },
+        {
+          "slug": "ict-presentations",
+          "name": "Presentation software",
+          "subject": "ict"
+        },
+        {
+          "slug": "ict-networks",
+          "name": "Computer networks",
           "subject": "ict"
         }
       ]
@@ -1205,6 +1245,21 @@
       "subject": "bdt"
     },
     {
+      "slug": "bdt-enterprise",
+      "name": "Business and entrepreneurship",
+      "subject": "bdt"
+    },
+    {
+      "slug": "bdt-materials",
+      "name": "Material properties",
+      "subject": "bdt"
+    },
+    {
+      "slug": "bdt-construction",
+      "name": "Building and construction",
+      "subject": "bdt"
+    },
+    {
       "slug": "home-food-and-nutrition",
       "name": "Food and nutrition",
       "subject": "home-economics"
@@ -1270,6 +1325,11 @@
       "subject": "ghanaian-language"
     },
     {
+      "slug": "ghc-vocabulary",
+      "name": "Vocabulary and word meaning",
+      "subject": "ghanaian-language"
+    },
+    {
       "slug": "fre-greetings",
       "name": "Greetings",
       "subject": "french"
@@ -1305,6 +1365,16 @@
       "subject": "french"
     },
     {
+      "slug": "fre-vocabulary",
+      "name": "Vocabulary and word meaning",
+      "subject": "french"
+    },
+    {
+      "slug": "fre-grammar",
+      "name": "Grammar",
+      "subject": "french"
+    },
+    {
       "slug": "ict-basics",
       "name": "Computer basics",
       "subject": "ict"
@@ -1321,7 +1391,7 @@
     },
     {
       "slug": "ict-internet-safety",
-      "name": "Internet safety",
+      "name": "Internet, email and safety",
       "subject": "ict"
     },
     {
@@ -1337,6 +1407,16 @@
     {
       "slug": "ict-programming",
       "name": "Programming basics",
+      "subject": "ict"
+    },
+    {
+      "slug": "ict-presentations",
+      "name": "Presentation software",
+      "subject": "ict"
+    },
+    {
+      "slug": "ict-networks",
+      "name": "Computer networks",
       "subject": "ict"
     }
   ],
