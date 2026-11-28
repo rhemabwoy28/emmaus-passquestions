@@ -14,7 +14,8 @@ EXTRA = [Path("/root/jobsearch/bece2024"), Path("/root/jobsearch/bece2025")]
 YEARS = list(range(1990, 2027))
 SUBJECTS = [
     {"slug": "mathematics", "name": "Mathematics", "topics": [
-        ("number-bases", "Number bases"), ("fractions-decimals", "Fractions and decimals"),
+        ("numbers", "Numbers and numeration"), ("number-bases", "Number bases"),
+        ("fractions-decimals", "Fractions and decimals"),
         ("indices", "Indices and standard form"), ("algebra", "Algebra"),
         ("equations", "Equations and inequalities"), ("geometry", "Geometry"),
         ("mensuration", "Mensuration"), ("trigonometry", "Trigonometry"),
@@ -401,7 +402,7 @@ def practice_page(data: dict) -> str:
     return f'''<section class="section"><div class="wrap">
   <h1>Practice questions</h1>
   <p class="lead" style="margin:10px 0 18px">Pick a subject, year or topic. Answers are marked on this device, and your best score stays here.</p>
-  <div class="notice" style="margin-bottom:18px">A mix of original practice questions and BECE English and Social Studies questions compiled from publicly available past papers. This is independent study material, not an official WAEC publication. The archived Mathematics PDFs remain available on each paper page.</div>
+  <div class="notice" style="margin-bottom:18px">A mix of original practice questions and BECE Mathematics, English and Social Studies questions compiled from publicly available past papers. This is independent study material, not an official WAEC publication. The archived Mathematics PDFs remain available on each paper page.</div>
   <form class="card quiz-controls" data-practice-controls>
     <div class="grid grid-5">
       <div class="field"><label for="practice-subject">Subject</label><select id="practice-subject" data-practice-subject><option value="">All subjects</option>{subjects}</select></div>
